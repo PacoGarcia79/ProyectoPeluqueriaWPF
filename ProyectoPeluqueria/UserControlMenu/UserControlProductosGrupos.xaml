@@ -1,0 +1,292 @@
+﻿<UserControl
+    x:Class="ProyectoPeluqueria.UserControlMenu.UserControlProductosGrupos"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:com="clr-namespace:ProyectoPeluqueria.UserControlMenu.ComandosUserControl"
+    xmlns:conv="clr-namespace:ProyectoPeluqueria.UserControlMenu.ConverterUserControl"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:ProyectoPeluqueria.UserControlMenu"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:ProyectoPeluqueria.Modelos"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:vm="clr-namespace:ProyectoPeluqueria.Viewmodels"
+    Background="White"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:RutaImagenConverter x:Key="rutaImagenConverter" />
+        <conv:Base64ImageConverter x:Key="base64ImageConverter" />
+    </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="com:CustomCommandsUserControl.AddProductoGrupo" Executed="AddProductoGrupo_Executed" />
+        <CommandBinding Command="com:CustomCommandsUserControl.ModifyProductoGrupo" Executed="ModifyProductoGrupo_Executed" />
+    </UserControl.CommandBindings>
+    <materialDesign:DialogHost Identifier="UserControlProductosGrupoRootDialogHost">
+        <materialDesign:DialogHost.DialogContentTemplate>
+            <DataTemplate>
+                <DataTemplate.Resources>
+
+                    <!--  Dialogo para añadir grupo  -->
+                    <DataTemplate DataType="{x:Type vm:AddProductoGrupoVM}">
+                        <Border Background="WhiteSmoke" CornerRadius="5">
+                            <StackPanel Margin="25">
+                                <TextBlock
+                                    Margin="0,0,0,8"
+                                    HorizontalAlignment="Center"
+                                    Foreground="Black"
+                                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                    Text="Introduce los datos" />
+                                <TextBox
+                                    x:Name="NombreGrupo"
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="Nombre"
+                                    Foreground="Black"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding GrupoNuevo.NombreGrupo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <TextBox
+                                        x:Name="FotoGrupo"
+                                        Width="140"
+                                        Margin="20"
+                                        materialDesign:HintAssist.Hint="Foto"
+                                        Foreground="Black"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding RutaFotoNueva, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        TextWrapping="Wrap" />
+                                    <Button
+                                        x:Name="Seleccionar"
+                                        Margin="15,20"
+                                        Command="{Binding OpenDialogCommand}"
+                                        Content="Seleccionar" />
+                                </StackPanel>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <Button
+                                        x:Name="Aceptar"
+                                        Margin="15,20"
+                                        Command="{Binding AddGrupoCommand}"
+                                        Content="Aceptar"
+                                        IsDefault="True">
+                                        <Button.Style>
+                                            <Style BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsValidating}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                    <ProgressBar
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        IsIndeterminate="True"
+                                        Value="0">
+                                        <ProgressBar.Style>
+                                            <Style BasedOn="{StaticResource MaterialDesignCircularProgressBar}" TargetType="ProgressBar">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsValidating}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ProgressBar.Style>
+                                    </ProgressBar>
+                                    <Button
+                                        x:Name="Cancelar"
+                                        Margin="15,20"
+                                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                        Content="Cancelar"
+                                        IsCancel="True"
+                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+
+                    <!--  Dialogo para modificar grupo  -->
+                    <DataTemplate DataType="{x:Type vm:ModifyProductoGrupoVM}">
+                        <Border Background="WhiteSmoke" CornerRadius="5">
+                            <StackPanel Margin="25">
+                                <TextBlock
+                                    Margin="0,0,0,8"
+                                    HorizontalAlignment="Center"
+                                    Foreground="Black"
+                                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                    Text="Introduce los datos" />
+                                <TextBox
+                                    x:Name="NombreGrupo"
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="Nombre"
+                                    Foreground="Black"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding GrupoModificar.NombreGrupo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <!--<TextBox
+                                    x:Name="NuevaFotoGrupo"
+                                    Width="280"
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="Foto"
+                                    Foreground="Black"
+                                    IsEnabled="False"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding GrupoModificar.Foto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    TextWrapping="Wrap" />-->
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <TextBox
+                                        x:Name="FotoGrupo"
+                                        Width="140"
+                                        Margin="20"
+                                        materialDesign:HintAssist.Hint="Foto"
+                                        Foreground="Black"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding RutaFotoNueva, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        TextWrapping="Wrap" />
+                                    <Button
+                                        x:Name="Seleccionar"
+                                        Margin="15,20"
+                                        Command="{Binding OpenDialogCommand}"
+                                        Content="Seleccionar" />
+                                </StackPanel>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <Button
+                                        x:Name="Aceptar"
+                                        Margin="15,20"
+                                        Command="{Binding ModifyGrupoCommand}"
+                                        Content="Aceptar"
+                                        IsDefault="True">
+                                        <Button.Style>
+                                            <Style BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsValidating}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                    <ProgressBar
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        IsIndeterminate="True"
+                                        Value="0">
+                                        <ProgressBar.Style>
+                                            <Style BasedOn="{StaticResource MaterialDesignCircularProgressBar}" TargetType="ProgressBar">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsValidating}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ProgressBar.Style>
+                                    </ProgressBar>
+                                    <Button
+                                        x:Name="Cancelar"
+                                        Margin="15,20"
+                                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                        Content="Cancelar"
+                                        IsCancel="True"
+                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+
+
+                </DataTemplate.Resources>
+                <ContentControl Content="{Binding}" />
+            </DataTemplate>
+        </materialDesign:DialogHost.DialogContentTemplate>
+
+        <Grid Margin="4" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!--  Listado de grupos de productos  -->
+            <ListBox
+                x:Name="ProductosGrupos"
+                Grid.Row="0"
+                Margin="80,20,80,10"
+                ItemsSource="{Binding ListaProductosGrupos, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding ProductoGrupoSeleccionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                SelectedValue="{Binding Path=(model:NavegacionTipoProducto.TipoProducto)}"
+                SelectedValuePath="NombreGrupo">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="IsSelected" Value="True" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Width="250" UniformCornerRadius="6">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="200" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Image
+                                    Height="200"
+                                    Source="{Binding Foto, Converter={StaticResource base64ImageConverter}}"
+                                    Stretch="Fill" />
+                                <Button
+                                    Grid.Row="0"
+                                    Margin="0,0,200,-20"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Command="com:CustomCommandsUserControl.ModifyProductoGrupo"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                                    ToolTip="Modificar grupo">
+                                    <materialDesign:PackIcon Kind="Pencil" />
+                                </Button>
+                                <Button
+                                    Grid.Row="0"
+                                    Margin="0,0,16,-20"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding DataContext.DisplayProductos, RelativeSource={RelativeSource AncestorType={x:Type local:UserControlProductosMain}}, Mode=OneWay}"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                                    ToolTip="Navegar a productos">
+                                    <materialDesign:PackIcon Kind="ChevronRight" />
+                                </Button>
+
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Margin="8,30,8,24"
+                                    HorizontalAlignment="Center">
+                                    <TextBlock
+                                        Margin="0"
+                                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                        Text="{Binding NombreGrupo}" />
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button
+                Grid.Row="1"
+                Margin="15"
+                Command="com:CustomCommandsUserControl.AddProductoGrupo"
+                Style="{StaticResource MaterialDesignFloatingActionButton}"
+                ToolTip="Añadir grupo">
+                <materialDesign:PackIcon Kind="Plus" />
+            </Button>
+        </Grid>
+
+    </materialDesign:DialogHost>
+</UserControl>

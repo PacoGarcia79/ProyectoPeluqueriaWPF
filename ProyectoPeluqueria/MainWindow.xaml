@@ -1,0 +1,265 @@
+﻿<Window
+    x:Class="ProyectoPeluqueria.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:com="clr-namespace:ProyectoPeluqueria.Comandos"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:ProyectoPeluqueria"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:ProyectoPeluqueria.Modelos"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:usercontrolpassword="clr-namespace:ProyectoPeluqueria.UserControlPassword"
+    xmlns:vm="clr-namespace:ProyectoPeluqueria.Viewmodels"
+    Width="1080"
+    Height="700"
+    MinWidth="1080"
+    MinHeight="700"
+    Foreground="White"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources />
+
+    <Window.CommandBindings>
+
+        <CommandBinding
+            CanExecute="ElementoVentana_CanExecute"
+            Command="com:CustomCommands.ElementoVentana"
+            Executed="ElementoVentana_Executed" />
+
+        <CommandBinding
+            CanExecute="LoginForm_CanExecute"
+            Command="com:CustomCommands.LoginForm"
+            Executed="LoginForm_Executed" />
+
+        <CommandBinding Command="com:CustomCommands.Logout" Executed="Logout_Executed" />
+
+        <CommandBinding Command="com:CustomCommands.Salir" Executed="Salir_Executed" />
+
+    </Window.CommandBindings>
+
+    <materialDesign:DialogHost Identifier="RootDialogHost">
+        <materialDesign:DialogHost.DialogContentTemplate>
+            <DataTemplate>
+                <DataTemplate.Resources>
+
+                    <!--  Dialogo para login  -->
+                    <DataTemplate DataType="{x:Type vm:LoginVM}">
+
+                        <Border
+                            Width="280"
+                            Background="WhiteSmoke"
+                            CornerRadius="5">
+                            <StackPanel Margin="25">
+                                <TextBlock
+                                    Margin="0,0,0,8"
+                                    HorizontalAlignment="Center"
+                                    Foreground="Black"
+                                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                    Text="Introduce tus datos" />
+                                <TextBox
+                                    x:Name="Usuario"
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="Nombre de usuario"
+                                    Foreground="Black"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding Username, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                                <usercontrolpassword:UserControlPassword
+                                    x:Name="Passw"
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="Contraseña"
+                                    Foreground="Black"
+                                    Password="{Binding Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <Button
+                                        x:Name="Aceptar"
+                                        Margin="15,20"
+                                        Command="{Binding LoginCommand}"
+                                        Content="Aceptar"
+                                        IsDefault="True">
+                                        <Button.Style>
+                                            <Style BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsValidating}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                    <ProgressBar
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        IsIndeterminate="True"
+                                        Value="0">
+                                        <ProgressBar.Style>
+                                            <Style BasedOn="{StaticResource MaterialDesignCircularProgressBar}" TargetType="ProgressBar">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsValidating}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ProgressBar.Style>
+                                    </ProgressBar>
+                                    <Button
+                                        x:Name="Cancelar"
+                                        Margin="15,20"
+                                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                        Content="Cancelar"
+                                        IsCancel="True"
+                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+
+                    <!--  Dialogo para logout  -->
+                    <DataTemplate DataType="{x:Type vm:DialogoConfirmacionVM}">
+                        <StackPanel MinWidth="300" Margin="20">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="{Binding Message}"
+                                TextAlignment="Center" />
+                            <Grid Margin="0,10,0,-10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button
+                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                    Content="Aceptar"
+                                    IsDefault="True"
+                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                    <Button.CommandParameter>
+                                        <system:Boolean>True</system:Boolean>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button
+                                    Grid.Column="1"
+                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                    Content="Cancelar"
+                                    IsCancel="True"
+                                    Style="{StaticResource MaterialDesignFlatButton}" />
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+
+                </DataTemplate.Resources>
+                <ContentControl Content="{Binding}" />
+            </DataTemplate>
+        </materialDesign:DialogHost.DialogContentTemplate>
+        <materialDesign:DrawerHost
+            x:Name="DrawerHost"
+            IsLeftDrawerOpen="{Binding CierraDrawer}"
+            LeftDrawerBackground="{DynamicResource MaterialDesignPaper}">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <StackPanel Width="200" Margin="5">
+                    <ToggleButton
+                        HorizontalAlignment="Right"
+                        Foreground="Black"
+                        IsChecked="{Binding IsLeftDrawerOpen, ElementName=DrawerHost}"
+                        Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                    <ListView
+                        Name="ListViewMenu"
+                        ItemsSource="{Binding ListaElementosMenu}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        SelectedItem="{Binding ElementoMenuSeleccionado}">
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                <i:InvokeCommandAction Command="com:CustomCommands.ElementoVentana" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="25"
+                                        Height="25"
+                                        Margin="10"
+                                        Kind="{Binding Tipo}" />
+                                    <TextBlock
+                                        Margin="20,10"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Contenido}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="90" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <materialDesign:ColorZone
+                    Grid.Row="0"
+                    Padding="16"
+                    Mode="PrimaryMid">
+                    <DockPanel>
+                        <!--  Menu overflow  -->
+                        <materialDesign:PopupBox
+                            DockPanel.Dock="Right"
+                            PlacementMode="BottomAndAlignRightEdges"
+                            StaysOpen="False">
+                            <StackPanel Width="150">
+                                <Button Command="com:CustomCommands.LoginForm" Content="Login" />
+                                <Button Content="Ayuda" />
+                                <Separator />
+                                <Button
+                                    Command="com:CustomCommands.Logout"
+                                    Content="Logout"
+                                    IsEnabled="{Binding UsuarioAutorizado}" />
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                        <!--  StackPanel con ToggleButton y Logo peluquería  -->
+                        <!--<StackPanel Orientation="Horizontal">
+                            <ToggleButton
+                                HorizontalAlignment="Left"
+                                IsChecked="{Binding IsLeftDrawerOpen, ElementName=DrawerHost}"
+                                IsEnabled="{Binding UsuarioAutorizado}"
+                                Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                            <Rectangle
+                                Width="270"
+                                Height="60"
+                                Margin="330,0,0,0"
+                                VerticalAlignment="Center">
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="./Img/white_logo.png" Stretch="Fill" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </StackPanel>-->
+                        <!--  DockPanel con ToggleButton y Logo app  -->
+                        <DockPanel>
+                            <ToggleButton
+                                DockPanel.Dock="Left"
+                                IsChecked="{Binding IsLeftDrawerOpen, ElementName=DrawerHost}"
+                                IsEnabled="{Binding UsuarioAutorizado}"
+                                Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                            <Rectangle
+                                Width="270"
+                                Height="60"
+                                VerticalAlignment="Center"
+                                DockPanel.Dock="Right">
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="./Img/white_logo.png" Stretch="Fill" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </DockPanel>
+                    </DockPanel>
+                </materialDesign:ColorZone>
+                <ContentControl Grid.Row="1" Content="{Binding SelectedUserControl}" />
+            </Grid>
+        </materialDesign:DrawerHost>
+    </materialDesign:DialogHost>
+</Window>
+
+<!--  ResizeMode="NoResize"  -->
