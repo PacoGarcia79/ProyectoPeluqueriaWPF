@@ -168,12 +168,19 @@ namespace ProyectoPeluqueria
         /// </summary>
         private void GetCookie()
         {
-            var request = (HttpWebRequest)WebRequest.Create(Properties.Settings.Default.api);
-            request.CookieContainer = new CookieContainer();
-
-            using (var response = (HttpWebResponse)request.GetResponse())
+            try
             {
-                Cook = response.Cookies[0];
+                var request = (HttpWebRequest)WebRequest.Create(Properties.Settings.Default.api);
+                request.CookieContainer = new CookieContainer();
+
+                using (var response = (HttpWebResponse)request.GetResponse())
+                {
+                    Cook = response.Cookies[0];
+                }
+            }
+            catch (WebException e)
+            {
+                MuestraDialogo("No es posible conectarse al servidor");
             }
         }
 

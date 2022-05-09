@@ -212,7 +212,7 @@
                             StaysOpen="False">
                             <StackPanel Width="150">
                                 <Button Command="com:CustomCommands.LoginForm" Content="Login" />
-                                <Button Content="Ayuda" />
+                                <!--<Button Content="Ayuda" />-->
                                 <Separator />
                                 <Button
                                     Command="com:CustomCommands.Logout"
