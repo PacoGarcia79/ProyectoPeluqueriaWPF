@@ -344,7 +344,7 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public async void HabilitaDisponibilidad()
         {
-            var vm = new DialogoConfirmacionVM("¿Quieres modificar la disponibilidad?");
+            var vm = new DialogoConfirmacionVM("¿Quieres habilitar los horarios?");
             object dialogResult = await MDIXDialogHost.Show(vm, DialogIdentifier);
             if (dialogResult is bool boolResult && boolResult)
             {
@@ -383,7 +383,7 @@ namespace ProyectoPeluqueria.Viewmodels
         {
             ObtieneEmpleadosYHorarios();
 
-            var vm = new DialogoConfirmacionVM("¿Quieres modificar la disponibilidad?");
+            var vm = new DialogoConfirmacionVM("¿Quieres deshabilitar los horarios?");
             object dialogResult = await MDIXDialogHost.Show(vm, DialogIdentifier);
             if (dialogResult is bool boolResult && boolResult)
             {

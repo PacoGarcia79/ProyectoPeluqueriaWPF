@@ -371,7 +371,14 @@
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Left" />
+                                <TextBlock TextAlignment="Left">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} - {1}€">
+                                            <Binding Path="Nombre" />
+                                            <Binding Path="Precio" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </model:CustomListBox>

@@ -288,7 +288,7 @@ namespace ProyectoPeluqueria
             ListaElementosMenu.Add(new ElementoMenu("Inicio", "HomeCircle", "Inicio"));
             ListaElementosMenu.Add(new ElementoMenu("Productos", "BottleTonic", "Productos"));
             ListaElementosMenu.Add(new ElementoMenu("Agenda", "Calendar", "Agenda"));
-            ListaElementosMenu.Add(new ElementoMenu("Citas", "CalendarEdit", "Reserva citas"));
+            ListaElementosMenu.Add(new ElementoMenu("Citas", "CalendarEdit", "Reserva de citas"));
             ListaElementosMenu.Add(new ElementoMenu("Horario", "StoreClock", "Horarios"));
             ListaElementosMenu.Add(new ElementoMenu("Empleados", "AccountGroup", "Empleados"));
             ListaElementosMenu.Add(new ElementoMenu("Servicios", "ContentCut", "Servicios"));
