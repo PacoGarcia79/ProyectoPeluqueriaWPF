@@ -38,7 +38,6 @@
         <conv:DateConverter x:Key="dateConverter" />
         <conv:TimeConverter x:Key="timeConverter" />
         <conv:StockConverter x:Key="stockConverter" />
-        <conv:RutaImagenConverter x:Key="rutaImagenConverter" />
         <conv:Base64ImageConverter x:Key="base64ImageConverter" />
     </UserControl.Resources>
     <materialDesign:DialogHost Identifier="UserControlProductosRootDialogHost">

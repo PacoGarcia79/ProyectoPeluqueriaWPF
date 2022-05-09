@@ -180,8 +180,6 @@ namespace ProyectoPeluqueria
 
         public MainWindowVM()
         {
-            BorraFotosDirectorioEmpleados();
-
             Client = new RestClient(Properties.Settings.Default.api);
             GetCookie();
 
@@ -328,23 +326,6 @@ namespace ProyectoPeluqueria
 
 
         public void Salir() => Application.Current.Shutdown();
-
-        /// <summary>
-        /// Limpia directorio usado para guardar las fotos de los empleados al convertirlas desde Base64
-        /// </summary>
-        public void BorraFotosDirectorioEmpleados() 
-        {
-            string appPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
-            string[] paths = { appPath, "img_empleados" };
-            string folderName = Path.Combine(paths);
-
-            if (!Directory.Exists(folderName))
-            {
-                Directory.CreateDirectory(folderName);
-            }
-
-            Directory.GetFiles(folderName).ToList().ForEach(File.Delete);
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

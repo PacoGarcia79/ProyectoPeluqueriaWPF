@@ -17,7 +17,6 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <conv:ImgConverter x:Key="imgConverter" />
-        <conv:RutaImagenConverter x:Key="rutaImagenConverter" />
         <conv:Base64ImageConverter x:Key="base64ImageConverter" />
     </UserControl.Resources>
     <UserControl.CommandBindings>

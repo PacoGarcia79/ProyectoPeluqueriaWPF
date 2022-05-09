@@ -89,7 +89,6 @@
     <Compile Include="ConverterUserControl\EnumToBoolConverter.cs" />
     <Compile Include="ConverterUserControl\ImgConverter.cs" />
     <Compile Include="ConverterUserControl\ProductosConverter.cs" />
-    <Compile Include="ConverterUserControl\RutaImagenConverter.cs" />
     <Compile Include="ConverterUserControl\StockConverter.cs" />
     <Compile Include="ConverterUserControl\TimeConverter.cs" />
     <Compile Include="UserControlMenu\UserControlProductosMain.xaml.cs">

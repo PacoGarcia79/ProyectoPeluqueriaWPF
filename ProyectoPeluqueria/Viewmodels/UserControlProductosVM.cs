@@ -161,8 +161,7 @@ namespace ProyectoPeluqueria.Viewmodels
 
         /// <summary>
         /// Método Execute de la implementación del Command
-        /// Abre el diálogo para seleccionar la foto, y una vez seleccionada la guarda
-        /// en el directorio "img" del directorio raiz de la aplicación        
+        /// Abre el diálogo para seleccionar la foto, y una vez seleccionada la convierte en Base64      
         /// </summary>
         public void OnOpenDialog()
         {
