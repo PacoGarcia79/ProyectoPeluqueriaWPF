@@ -178,7 +178,7 @@ namespace ProyectoPeluqueria
                     Cook = response.Cookies[0];
                 }
             }
-            catch (WebException e)
+            catch (WebException we)
             {
                 MuestraDialogo("No es posible conectarse al servidor");
             }

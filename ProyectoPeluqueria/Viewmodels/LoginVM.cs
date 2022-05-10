@@ -107,7 +107,7 @@ namespace ProyectoPeluqueria.Viewmodels
             }
             else
             {
-                MuestraDialogo("Introduzca los datos correctos");
+                MuestraDialogo("No es posible realizar el login");
             }
 
         }

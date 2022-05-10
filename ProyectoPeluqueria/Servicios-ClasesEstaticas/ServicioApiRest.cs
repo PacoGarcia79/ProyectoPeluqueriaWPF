@@ -28,22 +28,31 @@ namespace ProyectoPeluqueria
         /// Este método se usa para la autentificación del usuario
         /// </summary>
         /// <param name="usuario">Objeto de tipo Usuario con los datos necesarios para el login</param>
-        /// <returns>Un objeto de tipo MensajeLogin para evaluar el resultado de la petición</returns>
+        /// <returns>Un objeto de tipo MensajeLogin para evaluar el resultado de la petición. Si la cookie es nula, retorna
+        /// un objeto vacío</returns>
         public static MensajeLogin PostLogin(Usuario usuario)
         {
-            var request = new RestRequest("api/auth/login", Method.POST);
-
-            request.AddCookie(Cook.Name, Cook.Value);
-
-            request.AddJsonBody(new
+            if(Cook != null)
             {
-                username = usuario.Username,
-                password = usuario.Password
-            });
+                var request = new RestRequest("api/auth/login", Method.POST);
 
-            var response = Client.Execute(request);
+                request.AddCookie(Cook.Name, Cook.Value);
 
-            return JsonConvert.DeserializeObject<MensajeLogin>(response.Content);
+                request.AddJsonBody(new
+                {
+                    username = usuario.Username,
+                    password = usuario.Password
+                });
+
+                var response = Client.Execute(request);
+
+                return JsonConvert.DeserializeObject<MensajeLogin>(response.Content);
+            }
+            else
+            {
+                return new MensajeLogin();
+            }
+            
         }
 
         /// <summary>
