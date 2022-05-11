@@ -21,6 +21,9 @@ using MDIXDialogHost = MaterialDesignThemes.Wpf.DialogHost;
 
 namespace ProyectoPeluqueria.Viewmodels
 {
+    /// <summary>
+    /// Vista modelo del UserControl Productos
+    /// </summary>
     class UserControlProductosVM : INotifyPropertyChanged
     {
         /// <summary>

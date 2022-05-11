@@ -418,10 +418,3 @@
         </Grid>
     </materialDesign:DialogHost>
 </UserControl>
-
-
-<!--  DisplayDateStart="{Binding FechaSeleccionada}"  -->
-
-<!--  DisplayDateStart="{x:Static sys:DateTime.Today}"  -->
-
-<!--  model:CalendarAttachedProperties.RegisterBlackoutDates="{Binding BlackOutDates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  -->

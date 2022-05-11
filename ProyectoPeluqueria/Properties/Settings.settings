@@ -5,5 +5,8 @@
     <Setting Name="api" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://ubuntubalmispacogarcia.eastus.cloudapp.azure.com:8081/apirest/</Value>
     </Setting>
+    <Setting Name="imagen" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/Img/peluqueria.jpg</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

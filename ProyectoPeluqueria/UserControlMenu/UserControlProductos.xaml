@@ -62,13 +62,24 @@
                                     Foreground="Black"
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     Text="{Binding ProductoNuevo.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBox
-                                    x:Name="PrecioProducto"
-                                    Margin="20"
-                                    materialDesign:HintAssist.Hint="Precio"
-                                    Foreground="Black"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    Text="{Binding ProductoNuevo.Precio, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource doubleConverter}}" />
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <TextBox
+                                        x:Name="PrecioProducto"
+                                        Width="120"
+                                        Margin="20"
+                                        materialDesign:HintAssist.Hint="Precio"
+                                        Foreground="Black"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding ProductoNuevo.Precio, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource doubleConverter}}" />
+                                    <TextBox
+                                        x:Name="StockProducto"
+                                        Width="120"
+                                        Margin="20"
+                                        materialDesign:HintAssist.Hint="Stock"
+                                        Foreground="Black"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding ProductoNuevo.Stock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                     <TextBox
                                         x:Name="FotoProducto"
@@ -391,8 +402,7 @@
                                             <RowDefinition />
                                             <RowDefinition />
                                             <RowDefinition />
-                                            <RowDefinition Height="70" />
-                                            <RowDefinition Height="70" />
+                                            <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <TextBox
                                             Name="NombreEditar"
@@ -406,8 +416,14 @@
                                             materialDesign:HintAssist.Hint="Precio"
                                             materialDesign:HintAssist.IsFloating="True"
                                             Text="{Binding Precio, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource doubleConverter}}" />
-                                        <StackPanel
+                                        <TextBox
                                             Grid.Row="2"
+                                            Margin="0,12,0,0"
+                                            materialDesign:HintAssist.Hint="Stock"
+                                            materialDesign:HintAssist.IsFloating="True"
+                                            Text="{Binding Stock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <StackPanel
+                                            Grid.Row="3"
                                             HorizontalAlignment="Center"
                                             Orientation="Horizontal">
                                             <TextBox
@@ -430,7 +446,7 @@
                                                 FontSize="10" />
                                         </StackPanel>
                                         <TextBox
-                                            Grid.Row="3"
+                                            Grid.Row="4"
                                             Margin="0,12,0,0"
                                             materialDesign:HintAssist.Hint="Descripción"
                                             materialDesign:HintAssist.IsFloating="True"

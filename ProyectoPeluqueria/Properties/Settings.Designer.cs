@@ -34,5 +34,17 @@ namespace ProyectoPeluqueria.Properties {
                 this["api"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/Img/peluqueria.jpg")]
+        public string imagen {
+            get {
+                return ((string)(this["imagen"]));
+            }
+            set {
+                this["imagen"] = value;
+            }
+        }
     }
 }

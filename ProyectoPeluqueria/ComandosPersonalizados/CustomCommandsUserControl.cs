@@ -16,7 +16,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.A, ModifierKeys.Control)
+                
             }
         );
 
@@ -26,7 +26,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.B, ModifierKeys.Control)
+                
             }
         );
 
@@ -36,7 +36,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.D, ModifierKeys.Control)
+               
             }
         );
 
@@ -47,7 +47,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.F, ModifierKeys.Control)
+                
             }
         );
 
@@ -57,7 +57,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.G, ModifierKeys.Control)
+                
             }
         );
 
@@ -67,7 +67,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.H, ModifierKeys.Control)
+                
             }
         );
 
@@ -78,7 +78,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.I, ModifierKeys.Control)
+                
             }
         );
 
@@ -89,7 +89,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
            typeof(CustomCommandsUserControl),
            new InputGestureCollection()
            {
-                new KeyGesture(Key.J, ModifierKeys.Control)
+                
            }
        );
 
@@ -99,7 +99,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
           typeof(CustomCommandsUserControl),
           new InputGestureCollection()
           {
-                new KeyGesture(Key.K, ModifierKeys.Control)
+              
           }
       );
 
@@ -109,7 +109,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
           typeof(CustomCommandsUserControl),
           new InputGestureCollection()
           {
-                new KeyGesture(Key.M, ModifierKeys.Control)
+             
           }
       );
 
@@ -119,7 +119,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.Z, ModifierKeys.Control)
+               
             }
         );
 
@@ -129,7 +129,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
           typeof(CustomCommandsUserControl),
           new InputGestureCollection()
           {
-                new KeyGesture(Key.N, ModifierKeys.Control)
+             
           }
       );
 
@@ -139,7 +139,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.P, ModifierKeys.Control)
+               
             }
         );
 
@@ -149,7 +149,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.Q, ModifierKeys.Control)
+                
             }
         );
 
@@ -159,7 +159,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.R, ModifierKeys.Control)
+                
             }
         );
 
@@ -169,7 +169,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.T, ModifierKeys.Control)
+                
             }
         );
 
@@ -179,7 +179,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.V, ModifierKeys.Control)
+                
             }
         );
 
@@ -189,7 +189,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.W, ModifierKeys.Control)
+                
             }
         );
 
@@ -199,7 +199,7 @@ namespace ProyectoPeluqueria.UserControlMenu.ComandosUserControl
             typeof(CustomCommandsUserControl),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.Y, ModifierKeys.Control)
+                
             }
         );
 

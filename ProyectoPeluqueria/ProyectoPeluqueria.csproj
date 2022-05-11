@@ -81,7 +81,6 @@
     <Compile Include="Modelos\ProductoGrupo.cs" />
     <Compile Include="Modelos\Servicio.cs" />
     <Compile Include="Servicios-ClasesEstaticas\ImgUtils.cs" />
-    <Compile Include="Servicios-ClasesEstaticas\PathUtils.cs" />
     <Compile Include="ComandosPersonalizados\CustomCommandsUserControl.cs" />
     <Compile Include="ConverterUserControl\Base64ImageConverter.cs" />
     <Compile Include="ConverterUserControl\DateConverter.cs" />

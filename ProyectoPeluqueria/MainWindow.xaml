@@ -35,8 +35,6 @@
 
         <CommandBinding Command="com:CustomCommands.Logout" Executed="Logout_Executed" />
 
-        <CommandBinding Command="com:CustomCommands.Salir" Executed="Salir_Executed" />
-
     </Window.CommandBindings>
 
     <materialDesign:DialogHost Identifier="RootDialogHost">
@@ -220,24 +218,6 @@
                                     IsEnabled="{Binding UsuarioAutorizado}" />
                             </StackPanel>
                         </materialDesign:PopupBox>
-                        <!--  StackPanel con ToggleButton y Logo peluquería  -->
-                        <!--<StackPanel Orientation="Horizontal">
-                            <ToggleButton
-                                HorizontalAlignment="Left"
-                                IsChecked="{Binding IsLeftDrawerOpen, ElementName=DrawerHost}"
-                                IsEnabled="{Binding UsuarioAutorizado}"
-                                Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
-                            <Rectangle
-                                Width="270"
-                                Height="60"
-                                Margin="330,0,0,0"
-                                VerticalAlignment="Center">
-                                <Rectangle.Fill>
-                                    <ImageBrush ImageSource="./Img/white_logo.png" Stretch="Fill" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </StackPanel>-->
-                        <!--  DockPanel con ToggleButton y Logo app  -->
                         <DockPanel>
                             <ToggleButton
                                 DockPanel.Dock="Left"
@@ -261,5 +241,3 @@
         </materialDesign:DrawerHost>
     </materialDesign:DialogHost>
 </Window>
-
-<!--  ResizeMode="NoResize"  -->

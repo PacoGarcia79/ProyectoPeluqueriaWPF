@@ -16,7 +16,9 @@ using MDIXDialogHost = MaterialDesignThemes.Wpf.DialogHost;
 
 namespace ProyectoPeluqueria.Viewmodels
 {
-
+    /// <summary>
+    /// Vista modelo del UserControl Horarios
+    /// </summary>
     class UserControlHorarioVM : INotifyPropertyChanged
     {
         /// <summary>

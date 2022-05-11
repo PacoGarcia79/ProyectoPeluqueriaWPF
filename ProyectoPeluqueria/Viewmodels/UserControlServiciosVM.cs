@@ -18,6 +18,9 @@ using ProyectoPeluqueria.Servicios_ClasesEstaticas;
 
 namespace ProyectoPeluqueria.Viewmodels
 {
+    /// <summary>
+    /// Vista modelo del UserControl Servicios
+    /// </summary>
     class UserControlServiciosVM : INotifyPropertyChanged
     {
         /// <summary>

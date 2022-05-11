@@ -121,16 +121,6 @@
                                     Foreground="Black"
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     Text="{Binding GrupoModificar.NombreGrupo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <!--<TextBox
-                                    x:Name="NuevaFotoGrupo"
-                                    Width="280"
-                                    Margin="20"
-                                    materialDesign:HintAssist.Hint="Foto"
-                                    Foreground="Black"
-                                    IsEnabled="False"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    Text="{Binding GrupoModificar.Foto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    TextWrapping="Wrap" />-->
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                     <TextBox
                                         x:Name="FotoGrupo"

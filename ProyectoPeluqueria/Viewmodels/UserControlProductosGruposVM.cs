@@ -16,6 +16,9 @@ using MDIXDialogHost = MaterialDesignThemes.Wpf.DialogHost;
 
 namespace ProyectoPeluqueria.Viewmodels
 {
+    /// <summary>
+    /// Vista modelo del UserControl Productos Grupos
+    /// </summary>
     class UserControlProductosGruposVM : INotifyPropertyChanged
     {
         /// <summary>

@@ -18,7 +18,9 @@ using System.Windows.Input;
 
 namespace ProyectoPeluqueria.Viewmodels
 {
-   
+    /// <summary>
+    /// Vista modelo del UserControl Citas
+    /// </summary>
     class UserControlCitasVM : INotifyPropertyChanged
     {
         /// <summary>
@@ -408,10 +410,6 @@ namespace ProyectoPeluqueria.Viewmodels
                 FechaFinIntervalo = DateTime.Now.AddMonths(4);
                 FechaSeleccionada = DateTime.Now.AddMonths(3);
 
-                //CompruebaDiasAgenda();
-                //CompruebaFecha = true;
-
-                //TODO: ESTA VERSIÓN DE ABAJO PARECE SER LA DEFINITIVA, PERO COMPROBAR
                 CompruebaFecha = true;
                 CompruebaDiasAgenda();
 

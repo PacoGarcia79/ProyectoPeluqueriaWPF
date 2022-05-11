@@ -166,7 +166,8 @@ namespace ProyectoPeluqueria
                 nombre = producto.Nombre,
                 precio = producto.Precio,
                 idProductoGrupo = producto.IdProductoGrupo,
-                descripcion = producto.Descripcion
+                descripcion = producto.Descripcion,
+                stock = producto.Stock
             });
 
             var response = Client.Execute(request);
@@ -236,7 +237,8 @@ namespace ProyectoPeluqueria
                 idProducto = producto.IdProducto,
                 nombre = producto.Nombre,
                 precio = producto.Precio,
-                descripcion = producto.Descripcion
+                descripcion = producto.Descripcion,
+                stock = producto.Stock
             });
 
             var response = Client.Execute(request);

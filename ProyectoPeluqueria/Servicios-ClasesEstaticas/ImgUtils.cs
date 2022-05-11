@@ -42,13 +42,21 @@ namespace ProyectoPeluqueria.Servicios_ClasesEstaticas
         /// <returns>Imagen en formato Base64</returns>
         public static string imgToBase64(string path)
         {
-            Image img = Image.FromFile(path);
-            Bitmap imgbitmap = new Bitmap(img);
-            int ancho = imgbitmap.Width;
-            int alto = imgbitmap.Height;
-            Image resizedImage = resizeImage(imgbitmap, new System.Drawing.Size(ancho / 4, alto / 4));
-            byte[] bytes = imgToByteArray(resizedImage);
-            return Convert.ToBase64String(bytes);
+            try
+            {
+                Image img = Image.FromFile(path);
+                Bitmap imgbitmap = new Bitmap(img);
+                int ancho = imgbitmap.Width;
+                int alto = imgbitmap.Height;
+                Image resizedImage = resizeImage(imgbitmap, new System.Drawing.Size(ancho / 4, alto / 4));
+                byte[] bytes = imgToByteArray(resizedImage);
+                return Convert.ToBase64String(bytes);
+            }
+            catch(Exception)
+            {
+                return "";
+            }
+            
         }
     }
 }

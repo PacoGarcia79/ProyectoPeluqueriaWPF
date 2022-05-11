@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,16 +14,6 @@ namespace ProyectoPeluqueria.Viewmodels
     /// </summary>
     class UserControlInicioVM : INotifyPropertyChanged
     {
-        private const string DESCRIPCION = "Proin dignissim eleifend urna, at blandit ante ullamcorper in. Fusce laoreet nunc ac viverra " +
-            "tincidunt. Duis porttitor efficitur tristique. Sed pharetra ipsum libero, in dictum dolor accumsan eget. Sed in felis nulla. " +
-            "Sed pretium, est id convallis placerat, nisl est eleifend dolor, sit amet iaculis lectus sem quis ligula. Praesent a pretium est. " +
-            "Etiam sit amet quam non leo venenatis egestas. Praesent sit amet sagittis arcu, ac sagittis est. Duis mollis arcu id dapibus vestibulum. " +
-            "Donec tristique, turpis sit amet ultricies sagittis, velit ex dictum ex, eu pulvinar tellus nisi non urna. Maecenas cursus dolor sed " +
-            "lacus facilisis vulputate. Pellentesque tincidunt ornare efficitur. Phasellus lectus lorem, mattis eu mauris ut, consequat ultricies " +
-            "neque. Ut aliquet ipsum et ullamcorper molestie.";
-
-        private const string FOTO = "/Img/peluqueria.jpg";
-
         private string _texto;
         public string Texto
         {
@@ -52,8 +44,8 @@ namespace ProyectoPeluqueria.Viewmodels
 
         public UserControlInicioVM()
         {
-            Texto = DESCRIPCION;
-            Imagen = FOTO;
+            Texto = GetDescription();
+            Imagen = Properties.Settings.Default.imagen;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -61,6 +53,21 @@ namespace ProyectoPeluqueria.Viewmodels
         public void NotifyPropertyChanged(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public string GetDescription()
+        {
+            try
+            {
+                string appPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+                string[] paths = { appPath, "descripcion.txt" };
+
+                return File.ReadAllText(Path.Combine(paths));
+            }
+            catch (IOException)
+            {
+                return "";
+            }
         }
     }
 }

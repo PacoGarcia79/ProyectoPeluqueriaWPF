@@ -76,9 +76,6 @@
         </materialDesign:DialogHost.DialogContentTemplate>
         <Grid Name="GridDisponibilidad">
             <Grid.ColumnDefinitions>
-                <!--<ColumnDefinition Width="470" />
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="200" />-->
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
