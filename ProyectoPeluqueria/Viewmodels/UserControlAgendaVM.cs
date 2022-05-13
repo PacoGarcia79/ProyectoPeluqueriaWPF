@@ -180,11 +180,18 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public void BajaCita()
         {
-            Response = ServicioApiRest.PutCitaCancelada(ObtieneListadoIdsCitas());
-            if (Response.Mensaje == "Registro/s actualizado/s")  
+            var response = ServicioApiRest.PutCitaCancelada(ObtieneListadoIdsCitas());
+            if (response != null)
             {
-                MuestraDialogo("Ha cancelado las citas");
+                Response = response;
+
+                if (Response.Mensaje == "Registro/s actualizado/s")
+                {
+                    MuestraDialogo("Ha cancelado las citas");
+                }
             }
+            else
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
         }
 
         /// <summary>

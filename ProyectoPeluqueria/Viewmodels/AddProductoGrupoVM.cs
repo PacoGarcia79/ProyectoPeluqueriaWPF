@@ -160,7 +160,7 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         /// <returns>true/false</returns>
         public bool CanAdd() => !string.IsNullOrWhiteSpace(GrupoNuevo.NombreGrupo)
-            && !string.IsNullOrWhiteSpace(GrupoNuevo.Foto);
+            && !string.IsNullOrWhiteSpace(RutaFotoNueva);
 
         /// <summary>
         /// Método Execute de la implementación del ICommand
@@ -176,7 +176,7 @@ namespace ProyectoPeluqueria.Viewmodels
             }
             else
             {
-                MuestraDialogo("Introduzca los datos correctos");
+                MuestraDialogo("No se ha podido añadir");
             }
 
         }
@@ -197,7 +197,11 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public void AddGrupo()
         {
-            Response = ServicioApiRest.PostProductoGrupo(GrupoNuevo, FotoBase64);
+            var response = ServicioApiRest.PostProductoGrupo(GrupoNuevo, FotoBase64);
+            if (response != null)
+                Response = response;
+            else
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
         }
 
         /// <summary>
@@ -214,7 +218,12 @@ namespace ProyectoPeluqueria.Viewmodels
 
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
-                return Response.Mensaje == "Registro insertado";
+                return Response.Mensaje == "Registro insertado";                
+            }
+            catch (NullReferenceException)
+            {
+                MuestraDialogo("Error de acceso a la base de datos");
+                return false;
             }
             finally
             {

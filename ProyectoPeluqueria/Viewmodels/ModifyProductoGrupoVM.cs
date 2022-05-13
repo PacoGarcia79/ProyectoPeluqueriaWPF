@@ -170,6 +170,8 @@ namespace ProyectoPeluqueria.Viewmodels
 
                 FotoBase64 = ImgUtils.imgToBase64(path);
 
+                GrupoModificar.Foto = FotoBase64;
+
                 RutaFotoNueva = path;
             }
 
@@ -189,7 +191,7 @@ namespace ProyectoPeluqueria.Viewmodels
             }
             else
             {
-                MuestraDialogo("Introduzca los datos correctos");
+                MuestraDialogo("No se ha podido modificar");
             }
         }
 
@@ -209,7 +211,11 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public void ModifyGrupo()
         {
-            Response = ServicioApiRest.PutProductoGrupo(GrupoModificar, FotoBase64);
+            var response = ServicioApiRest.PutProductoGrupo(GrupoModificar);
+            if (response != null)
+                Response = response;
+            else
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
         }
 
         /// <summary>
@@ -227,6 +233,11 @@ namespace ProyectoPeluqueria.Viewmodels
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 return Response.Mensaje == "Registro actualizado";
+            }
+            catch (NullReferenceException)
+            {
+                MuestraDialogo("No se puede acceder a la base de datos");
+                return false;
             }
             finally
             {

@@ -160,7 +160,7 @@ namespace ProyectoPeluqueria.Viewmodels
         /// Método CanExecute de la implementación del ICommand
         /// </summary>
         /// <returns>true/false</returns>
-        public bool CanAdd() => !string.IsNullOrWhiteSpace(ServicioNuevo.Foto) && !string.IsNullOrWhiteSpace(ServicioNuevo.Precio.ToString())
+        public bool CanAdd() => !string.IsNullOrWhiteSpace(RutaFotoNueva) && !string.IsNullOrWhiteSpace(ServicioNuevo.Precio.ToString())
             && !string.IsNullOrWhiteSpace(ServicioNuevo.Nombre);
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace ProyectoPeluqueria.Viewmodels
             }
             else
             {
-                MuestraDialogo("Introduzca los datos correctos");
+                MuestraDialogo("No se ha podido añadir");
             }
 
         }
@@ -198,7 +198,11 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public void AddServicio()
         {
-            Response = ServicioApiRest.PostServicio(ServicioNuevo);
+            var response = ServicioApiRest.PostServicio(ServicioNuevo);
+            if (response != null)
+                Response = response;
+            else
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
         }
 
         /// <summary>
@@ -216,6 +220,11 @@ namespace ProyectoPeluqueria.Viewmodels
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 return Response.Mensaje == "Registro insertado";
+            }
+            catch (NullReferenceException)
+            {
+                MuestraDialogo("No se puede acceder a la base de datos");
+                return false;
             }
             finally
             {

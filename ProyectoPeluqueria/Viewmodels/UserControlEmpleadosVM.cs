@@ -132,11 +132,18 @@ namespace ProyectoPeluqueria.Viewmodels
         {
             EmpleadoSeleccionadoAuxiliar.Fecha_Baja = DateTime.Now;
 
-            Response = ServicioApiRest.PutEmpleadoFechaBaja(EmpleadoSeleccionadoAuxiliar);
-            if (Response.Mensaje == "Registro actualizado")
+            var response = ServicioApiRest.PutEmpleadoFechaBaja(EmpleadoSeleccionadoAuxiliar);
+            if (response != null)
             {
-                MuestraDialogo("Ha dado de baja al empleado");
-            }
+                Response = response;
+
+                if (Response.Mensaje == "Registro actualizado")
+                {
+                    MuestraDialogo("Ha dado de baja al empleado");
+                }
+            }                
+            else
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
         }
 
         /// <summary>
@@ -192,7 +199,7 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public void ModificarEmpleado()
         {
-            Response = ServicioApiRest.PutEmpleado(EmpleadoSeleccionado, FotoBase64);
+            Response = ServicioApiRest.PutEmpleado(EmpleadoSeleccionado);
         }
 
         /// <summary>

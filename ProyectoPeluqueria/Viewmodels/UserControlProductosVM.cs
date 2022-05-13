@@ -190,11 +190,19 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public void EliminarProducto()
         {
-            Response = ServicioApiRest.DelProducto(ProductoSeleccionadoAuxiliar.IdProducto);
-            if (Response.Mensaje == "Registro eliminado")
+            var response = ServicioApiRest.DelProducto(ProductoSeleccionadoAuxiliar.IdProducto);
+            if (response != null)
             {
-                MuestraDialogo("Ha borrado el producto");
-            }
+                Response = response;
+
+                if (Response.Mensaje == "Registro eliminado")
+                {
+                    MuestraDialogo("Ha borrado el producto");
+                }
+            }                
+            else
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
+            
         }
 
 
@@ -306,7 +314,11 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public void ModificarProducto()
         {
-            Response = ServicioApiRest.PutProducto(ProductoSeleccionado);
+            var response = ServicioApiRest.PutProducto(ProductoSeleccionado);
+            if (response != null)
+                Response = response;
+            else
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
         }
 
         /// <summary>

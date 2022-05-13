@@ -27,6 +27,11 @@ namespace ProyectoPeluqueria.Modelos
             Usuario = usuario;
         }
 
+        public MensajeLogout(string usuario)
+        {
+            Usuario = usuario;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

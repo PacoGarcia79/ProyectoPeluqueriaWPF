@@ -191,7 +191,7 @@ namespace ProyectoPeluqueria.Viewmodels
         public bool CanAdd() => !string.IsNullOrWhiteSpace(UsuarioNuevo.Nombre) && !string.IsNullOrWhiteSpace(UsuarioNuevo.Foto)
             && !string.IsNullOrWhiteSpace(UsuarioNuevo.Apellidos) && !string.IsNullOrWhiteSpace(UsuarioNuevo.Username)
             && !string.IsNullOrWhiteSpace(UsuarioNuevo.Password) && !string.IsNullOrWhiteSpace(UsuarioNuevo.Apellidos)
-            && !string.IsNullOrWhiteSpace(UsuarioNuevo.Email) && !string.IsNullOrWhiteSpace(UsuarioNuevo.Telefono)
+            && !string.IsNullOrWhiteSpace(UsuarioNuevo.Email) && !string.IsNullOrWhiteSpace(UsuarioNuevo.Telefono) && !string.IsNullOrWhiteSpace(RutaFotoNueva)
             && !string.IsNullOrWhiteSpace(ConfirmacionPassword) && ConfirmacionPassword == UsuarioNuevo.Password;
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace ProyectoPeluqueria.Viewmodels
                 }
                 else
                 {
-                    MuestraDialogo("Introduzca los datos correctos");
+                    MuestraDialogo("No se ha podido añadir");
                 }
             }
 
@@ -240,7 +240,12 @@ namespace ProyectoPeluqueria.Viewmodels
         {
             UsuarioNuevo.Password = Hash.ComputeSha256Hash(UsuarioNuevo.Password);
             UsuarioNuevo.Fecha_Alta = FechaActual;
-            Response = ServicioApiRest.PostUsuario(UsuarioNuevo, FotoBase64);
+
+            var response = ServicioApiRest.PostUsuario(UsuarioNuevo, FotoBase64);
+            if (response != null)
+                Response = response;
+            else
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
         }
 
         /// <summary>
@@ -271,6 +276,11 @@ namespace ProyectoPeluqueria.Viewmodels
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 return Response.Mensaje == "Registro insertado" && ResponseAux.Mensaje == "Registro actualizado";
+            }
+            catch (NullReferenceException)
+            {
+                MuestraDialogo("No se puede acceder a la base de datos");
+                return false;
             }
             finally
             {

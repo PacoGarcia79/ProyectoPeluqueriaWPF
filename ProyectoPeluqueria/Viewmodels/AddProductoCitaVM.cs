@@ -149,7 +149,11 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public void AddCitaProducto()
         {
-            Response = ServicioApiRest.PostProductoCita(CitaSeleccionada.IdCita, IdProductoSeleccionado, CantidadProductoSeleccionado);
+            var response = ServicioApiRest.PostProductoCita(CitaSeleccionada.IdCita, IdProductoSeleccionado, CantidadProductoSeleccionado);
+            if (response != null)
+                Response = response;
+            else
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
         }
 
         /// <summary>
@@ -167,6 +171,11 @@ namespace ProyectoPeluqueria.Viewmodels
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 return Response.Mensaje == "Registro insertado";
+            }
+            catch (NullReferenceException)
+            {
+                MuestraDialogo("No se puede acceder a la base de datos");
+                return false;
             }
             finally
             {

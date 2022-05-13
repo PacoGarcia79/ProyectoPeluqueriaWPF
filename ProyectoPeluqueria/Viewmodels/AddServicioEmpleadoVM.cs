@@ -141,7 +141,11 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public void AddServicioEmpleado()
         {
-            Response = ServicioApiRest.PutEmpleadoServicio(UsuarioSeleccionado.IdUsuario, IdServicioSeleccionado);
+            var response = ServicioApiRest.PutEmpleadoServicio(UsuarioSeleccionado.IdUsuario, IdServicioSeleccionado);
+            if (response != null)
+                Response = response;
+            else
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
         }
 
         /// <summary>
@@ -159,6 +163,11 @@ namespace ProyectoPeluqueria.Viewmodels
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 return Response.Mensaje == "Registro actualizado";
+            }
+            catch (NullReferenceException)
+            {
+                MuestraDialogo("No se puede acceder a la base de datos");
+                return false;
             }
             finally
             {

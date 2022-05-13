@@ -350,17 +350,23 @@ namespace ProyectoPeluqueria.Viewmodels
             object dialogResult = await MDIXDialogHost.Show(vm, DialogIdentifier);
             if (dialogResult is bool boolResult && boolResult)
             {
-                Response = ServicioApiRest.PutDelDisponibilidadIds(ObtieneListadoIdsDisponibilidad());
-
-                if (Response.Mensaje == "Registro/s actualizado/s")
+                var response = ServicioApiRest.PutDelDisponibilidadIds(ObtieneListadoIdsDisponibilidad());
+                if (response != null)
                 {
-                    MuestraDialogo("Disponibilidad Modificada");
-                    RefrescaListas();
+                    Response = response;
+
+                    if (Response.Mensaje == "Registro/s actualizado/s")
+                    {
+                        MuestraDialogo("Disponibilidad Modificada");
+                        RefrescaListas();
+                    }
+                    else
+                    {
+                        MuestraDialogo("Ha habido un error al modificar");
+                    }
                 }
                 else
-                {
-                    MuestraDialogo("Ha habido un error al modificar");
-                }
+                    Response = new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
 
@@ -389,30 +395,37 @@ namespace ProyectoPeluqueria.Viewmodels
             object dialogResult = await MDIXDialogHost.Show(vm, DialogIdentifier);
             if (dialogResult is bool boolResult && boolResult)
             {
-                Response = ServicioApiRest.PutAddDisponibilidad(FechaComienzo, FechaFin, EmpleadosString, HorariosString);
-
-                if (Response.Mensaje == "Registro actualizado")
+                var response = ServicioApiRest.PutAddDisponibilidad(FechaComienzo, FechaFin, EmpleadosString, HorariosString);
+                if (response != null)
                 {
-                    ListaCitasConfirmadas = ServicioApiRest.GetCitasConfirmadasHorarioEmpleadoFecha(HorariosString, EmpleadosString, FechaComienzo, FechaFin);
-                    if (ListaCitasConfirmadas.Count > 0)
+                    Response = response;
+
+                    if (Response.Mensaje == "Registro actualizado")
                     {
-                        MuestraDialogo("Disponibilidad Modificada. Hay una cita en esa franja horaria. Recuerde avisar al cliente");
+                        ListaCitasConfirmadas = ServicioApiRest.GetCitasConfirmadasHorarioEmpleadoFecha(HorariosString, EmpleadosString, FechaComienzo, FechaFin);
+                        if (ListaCitasConfirmadas.Count > 0)
+                        {
+                            MuestraDialogo("Disponibilidad Modificada. Hay una cita en esa franja horaria. Recuerde avisar al cliente");
+                        }
+                        else
+                        {
+                            MuestraDialogo("Disponibilidad Modificada");
+                        }
+
+                        RefrescaListas();
+                    }
+                    else if (Response.Mensaje == "Error registro")
+                    {
+                        MuestraDialogo("No se puede realizar al existir previamente el registro");
                     }
                     else
                     {
-                        MuestraDialogo("Disponibilidad Modificada");
+                        MuestraDialogo("Ha habido un error al modificar");
                     }
-
-                    RefrescaListas();
-                }
-                else if (Response.Mensaje == "Error registro")
-                {
-                    MuestraDialogo("No se puede realizar al existir previamente el registro");
                 }
                 else
-                {
-                    MuestraDialogo("Ha habido un error al modificar");
-                }
+                    Response = new MensajeGeneral("Error de acceso a la base de datos");
+
             }
         }
 

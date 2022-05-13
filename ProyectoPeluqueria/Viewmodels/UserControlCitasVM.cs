@@ -397,28 +397,34 @@ namespace ProyectoPeluqueria.Viewmodels
         {
             string servicios = ObtieneListadoServicios();
 
-            Response = ServicioApiRest.PostCita(HorarioSeleccionado.IdHorario, EmpleadoSeleccionado.IdUsuario,
+            var response = ServicioApiRest.PostCita(HorarioSeleccionado.IdHorario, EmpleadoSeleccionado.IdUsuario,
                 FechaSeleccionada, ClienteSeleccionado.IdUsuario, servicios);
-
-            if (Response.Mensaje == "Registro insertado")
+            if (response != null)
             {
-                MuestraDialogo("Cita añadida");
+                Response = response;
 
-                LimpiaListasYObjetos();
+                if (Response.Mensaje == "Registro insertado")
+                {
+                    MuestraDialogo("Cita añadida");
 
-                CompruebaFecha = false;
-                FechaFinIntervalo = DateTime.Now.AddMonths(4);
-                FechaSeleccionada = DateTime.Now.AddMonths(3);
+                    LimpiaListasYObjetos();
 
-                CompruebaFecha = true;
-                CompruebaDiasAgenda();
+                    CompruebaFecha = false;
+                    FechaFinIntervalo = DateTime.Now.AddMonths(4);
+                    FechaSeleccionada = DateTime.Now.AddMonths(3);
+
+                    CompruebaFecha = true;
+                    CompruebaDiasAgenda();
 
 
+                }
+                else
+                {
+                    MuestraDialogo("Ha habido un error al añadir la cita");
+                }
             }
             else
-            {
-                MuestraDialogo("Ha habido un error al añadir la cita");
-            }
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
         }
 
         /// <summary>
@@ -448,34 +454,41 @@ namespace ProyectoPeluqueria.Viewmodels
             int contador = 0;
             DateTime fechaComienzoBusqueda;
 
-            if (BlackOutDates[0].ToShortDateString() != DateTime.Now.ToShortDateString())
+            if(BlackOutDates != null)
             {
-                FechaActual = DateTime.Now;
+                if (BlackOutDates[0].ToShortDateString() != DateTime.Now.ToShortDateString())
+                {
+                    FechaActual = DateTime.Now;
 
-                FechaSeleccionada = DateTime.Now;
+                    FechaSeleccionada = DateTime.Now;
 
-                FechaFinIntervalo = DateTime.Now.AddDays(60);
+                    FechaFinIntervalo = DateTime.Now.AddDays(60);
+                }
+                else
+                {
+                    fechaComienzoBusqueda = DateTime.Now;
+                    for (var dt = fechaComienzoBusqueda; dt <= DateTime.Now.AddDays(60); dt = dt.AddDays(1))
+                    {
+                        if (BlackOutDates[contador].ToShortDateString() != dt.ToShortDateString())
+                        {
+                            closestDate = dt;
+                            break;
+                        }
+
+                        contador++;
+                    }
+
+                    FechaSeleccionada = closestDate;
+
+                    FechaActual = closestDate;
+
+                    FechaFinIntervalo = closestDate.AddDays(60);
+                }
             }
             else
             {
-                fechaComienzoBusqueda = DateTime.Now;
-                for (var dt = fechaComienzoBusqueda; dt <= DateTime.Now.AddDays(60); dt = dt.AddDays(1))
-                {
-                    if (BlackOutDates[contador].ToShortDateString() != dt.ToShortDateString())
-                    {
-                        closestDate = dt;
-                        break;
-                    }
-
-                    contador++;
-                }
-
-                FechaSeleccionada = closestDate;
-
-                FechaActual = closestDate;
-
-                FechaFinIntervalo = closestDate.AddDays(60);
-            }
+                MuestraDialogo("Error al acceder a las fechas");
+            }            
         }
 
         /// <summary>

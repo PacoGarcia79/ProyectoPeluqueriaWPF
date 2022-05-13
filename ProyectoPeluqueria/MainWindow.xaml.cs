@@ -26,7 +26,7 @@ namespace ProyectoPeluqueria
         {
             _vm = new MainWindowVM();
             InitializeComponent();
-            DataContext = _vm;                        
+            DataContext = _vm;
         }
 
         private void Logout_Executed(object sender, ExecutedRoutedEventArgs e)
