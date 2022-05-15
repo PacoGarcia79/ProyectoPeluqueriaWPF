@@ -475,7 +475,7 @@
                     Command="com:CustomCommandsUserControl.ModificarProducto"
                     Style="{StaticResource MaterialDesignFloatingActionButton}"
                     ToolTip="Modificar producto">
-                    <materialDesign:PackIcon Kind="Pencil" />
+                    <materialDesign:PackIcon Kind="CheckBold" />
                 </Button>
                 <Button
                     Margin="15"

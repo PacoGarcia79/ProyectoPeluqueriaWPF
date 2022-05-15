@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -29,7 +30,9 @@ namespace ProyectoPeluqueria.UserControlMenu.ConverterUserControl
         {
             cantidadString = (string)value;
 
-            if (string.IsNullOrEmpty(cantidadString) || !cantidadString.All(char.IsDigit))
+            string patron = @"^\d+\,?\d*$";
+
+            if (string.IsNullOrEmpty(cantidadString) || !Regex.IsMatch(cantidadString, patron))
                 cantidad = 0.0;
             else
                 cantidad = double.Parse(cantidadString);
