@@ -119,7 +119,7 @@ namespace ProyectoPeluqueria.Viewmodels
             Response = new MensajeGeneral();
             FechaComienzo = DateTime.Now;
             FechaFin = DateTime.Now;
-            ListaCitas = ServicioApiRest.GetCitas(FechaComienzo, FechaFin);
+            ListaCitas = ServicioApiRest.GetCitas(FechaComienzo, FechaFin,0);
 
             _selectedItems = new ObservableCollection<Cita>();
         }
@@ -146,7 +146,7 @@ namespace ProyectoPeluqueria.Viewmodels
                     FechaFin = fechaFin;
                 }
 
-                ListaCitas = ServicioApiRest.GetCitas(FechaComienzo, FechaFin);
+                ListaCitas = ServicioApiRest.GetCitas(FechaComienzo, FechaFin, 0);
             }
         }
 
@@ -171,7 +171,7 @@ namespace ProyectoPeluqueria.Viewmodels
             if (dialogResult is bool boolResult && boolResult)
             {
                 BajaCita();
-                ListaCitas = ServicioApiRest.GetCitas(FechaComienzo, FechaFin);
+                ListaCitas = ServicioApiRest.GetCitas(FechaComienzo, FechaFin, 0);
             }
         }
 

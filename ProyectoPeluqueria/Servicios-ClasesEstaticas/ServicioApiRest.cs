@@ -505,16 +505,18 @@ namespace ProyectoPeluqueria
         }
 
         /// <summary>
-        /// Este metodo se usa para obtener el listado de citas para una fecha o periodo de fechas.
+        /// Este método se usa para obtener la lista de citas para un usuario o todos los usuarios. Si se pasa un cero
+        /// como parámetro de id de usuario, obtiene todas las citas.
         /// </summary>
         /// <param name="fechaComienzo">fecha de comienzo del periodo.</param>
         /// <param name="fechaFin">fecha de fin del periodo.</param>
-        /// <returns>ObservableCollection de objetos Cita</returns>
-        public static ObservableCollection<Cita> GetCitas(DateTime fechaComienzo, DateTime fechaFin)
+        /// <param name="idUsuario">id del usuario del que se quieren obtener las citas, o cero si se quieren todas.</param>
+        /// <returns>ObservableCollection de objetos Cita</returns>      
+        public static ObservableCollection<Cita> GetCitas(DateTime fechaComienzo, DateTime fechaFin, int idUsuario)
         {
             try
             {
-                var request = new RestRequest($"api/peluqueria/citas/{fechaComienzo:yyyy-MM-dd}/{fechaFin:yyyy-MM-dd}", Method.GET);
+                var request = new RestRequest($"api/peluqueria/citas/{fechaComienzo:yyyy-MM-dd}/{fechaFin:yyyy-MM-dd}/{idUsuario}", Method.GET);
 
                 request.AddCookie(Cook.Name, Cook.Value);
 
