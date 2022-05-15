@@ -14,7 +14,7 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Border Background="White" CornerRadius="5">
+    <Border Background="#e3e1e1" CornerRadius="5">
         <StackPanel Margin="10">
             <TextBlock
                 x:Name="MensajeText"

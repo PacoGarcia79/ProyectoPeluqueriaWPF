@@ -197,6 +197,20 @@ namespace ProyectoPeluqueria.Modelos
             }
         }
 
+        private string _telefono;
+        public string Telefono
+        {
+            get { return _telefono; }
+            set
+            {
+                if (_telefono != value)
+                {
+                    _telefono = value;
+                    NotifyPropertyChanged("Telefono");
+                }
+            }
+        }
+
         private bool _cancelada;
         public bool Cancelada
         {
@@ -230,6 +244,21 @@ namespace ProyectoPeluqueria.Modelos
 
         public Cita(int idCita, DateTime fecha, string cliente, string profesional, string hora, string servicios, 
             double precio_Servicios, string productos, string cantidad, double precio_Productos)
+        {
+            IdCita = idCita;
+            Fecha = fecha;
+            Cliente = cliente;
+            Profesional = profesional;
+            Hora = hora;
+            Servicios = servicios;
+            Precio_Servicios = precio_Servicios;
+            Productos = productos;
+            Cantidad = cantidad;
+            Precio_Productos = precio_Productos;
+        }
+
+        public Cita(int idCita, DateTime fecha, string cliente, string profesional, string hora, string servicios,
+            double precio_Servicios, string productos, string cantidad, double precio_Productos, string Telefono)
         {
             IdCita = idCita;
             Fecha = fecha;

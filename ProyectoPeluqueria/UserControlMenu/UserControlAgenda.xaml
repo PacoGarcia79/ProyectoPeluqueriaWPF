@@ -121,6 +121,7 @@
                     <DataGridTextColumn Binding="{Binding Path=Productos}" Header="Productos" />
                     <DataGridTextColumn Binding="{Binding Path=Cantidad}" Header="Cantidad" />
                     <DataGridTextColumn Binding="{Binding Path=Precio_Productos}" Header="Precio Productos" />
+                    <DataGridTextColumn Binding="{Binding Path=Telefono}" Header="Telefono" />
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel

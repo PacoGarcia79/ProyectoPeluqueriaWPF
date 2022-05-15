@@ -119,9 +119,24 @@ namespace ProyectoPeluqueria.Viewmodels
             Response = new MensajeGeneral();
             FechaComienzo = DateTime.Now;
             FechaFin = DateTime.Now;
-            ListaCitas = ServicioApiRest.GetCitas(FechaComienzo, FechaFin,0);
+            CargaCitas();
 
             _selectedItems = new ObservableCollection<Cita>();
+        }
+
+        /// <summary>
+        /// Carga las citas confirmadas y muestra mensaje si no hay ningúna confirmada en ese rango de fechas
+        /// </summary>
+        public async void CargaCitas()
+        {
+            ListaCitas = ServicioApiRest.GetCitas(FechaComienzo, FechaFin, 0);
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            if (ListaCitas.Count == 0)
+            {
+                MuestraDialogo("No hay citas reservadas en este rango de fechas");
+            }
         }
 
         /// <summary>
@@ -146,7 +161,7 @@ namespace ProyectoPeluqueria.Viewmodels
                     FechaFin = fechaFin;
                 }
 
-                ListaCitas = ServicioApiRest.GetCitas(FechaComienzo, FechaFin, 0);
+                CargaCitas();
             }
         }
 
