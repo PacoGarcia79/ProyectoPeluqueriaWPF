@@ -6278,7 +6278,7 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:"
+        "Manufacturer" = "8:Peluqueria en un click"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:InstaladorPeluqueria"
@@ -6390,6 +6390,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_52DA5FFD095648CE840DC38A6E20D55C"
+            {
+            "Name" = "8:Peluqueria en un click"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_784262EC1CFA46118D17F429CD41BB0C"
+            "Folder" = "8:_7CCA4BF05F924928997ED38C811985A8"
+            "WorkingFolder" = "8:_7CCA4BF05F924928997ED38C811985A8"
+            "Icon" = "8:_C0436A9A45EE40CAB4D5BD1332BE5670"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6F700C9B1C0648D0B0E0D2AD90F14F50"
             {
             "Name" = "8:Peluqueria en un click"
@@ -6400,20 +6414,6 @@
             "Transitive" = "11:FALSE"
             "Target" = "8:_784262EC1CFA46118D17F429CD41BB0C"
             "Folder" = "8:_3DD16AF20C034A9C9C9EC928476CF365"
-            "WorkingFolder" = "8:_7CCA4BF05F924928997ED38C811985A8"
-            "Icon" = "8:_C0436A9A45EE40CAB4D5BD1332BE5670"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7ED2A6770EAE4B59A22E0E81E89E81D0"
-            {
-            "Name" = "8:Peluqueria en un click"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_784262EC1CFA46118D17F429CD41BB0C"
-            "Folder" = "8:_7CCA4BF05F924928997ED38C811985A8"
             "WorkingFolder" = "8:_7CCA4BF05F924928997ED38C811985A8"
             "Icon" = "8:_C0436A9A45EE40CAB4D5BD1332BE5670"
             "Feature" = "8:"
@@ -6833,7 +6833,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_784262EC1CFA46118D17F429CD41BB0C"
             {
-            "SourcePath" = "8:..\\ProyectoPeluqueria\\obj\\Release\\ProyectoPeluqueria.exe"
+            "SourcePath" = "8:..\\ProyectoPeluqueria\\obj\\Debug\\ProyectoPeluqueria.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CCA4BF05F924928997ED38C811985A8"
