@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ProyectoPeluqueria.DialogoPersonalizado;
 using ProyectoPeluqueria.Modelos;
 using RestSharp;
 using System;
@@ -22,6 +23,39 @@ namespace ProyectoPeluqueria
         /// </summary>
         public static Cookie Cook { get; set; }
 
+
+        /// <summary>
+        /// Obtiene la cookie necesaría para las peticiones a la APIRest
+        /// </summary>
+        private static void GetCookie()
+        {
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(Properties.Settings.Default.api);
+                request.CookieContainer = new CookieContainer();
+
+                using (var response = (HttpWebResponse)request.GetResponse())
+                {
+                    Cook = response.Cookies[0];
+                }
+            }
+            catch (WebException)
+            {
+                MuestraDialogo("No es posible conectarse al servidor");
+            }
+        }
+
+        /// <summary>
+        /// Muestra un diálogo informativo con un mensaje pasado por parámetro
+        /// </summary>
+        /// <param name="mensaje">string a mostrar</param>
+        public static void MuestraDialogo(string mensaje)
+        {
+            Dialogo dialogo = new Dialogo();
+            dialogo.MensajeText.Text = mensaje;
+            dialogo.ShowDialog();
+        }
+
         #region Login/Logout
 
         /// <summary>
@@ -29,9 +63,12 @@ namespace ProyectoPeluqueria
         /// </summary>
         /// <param name="usuario">Objeto de tipo Usuario con los datos necesarios para el login</param>
         /// <returns>Un objeto de tipo MensajeLogin para evaluar el resultado de la petición. Si la cookie es nula, retorna
-        /// un objeto vacío</returns>
+        /// un objeto vacío</returns>       
         public static MensajeLogin PostLogin(Usuario usuario)
         {
+            Client = new RestClient(Properties.Settings.Default.api);
+            GetCookie();
+
             if (Cook != null)
             {
                 var request = new RestRequest("api/auth/login", Method.POST);
@@ -103,7 +140,9 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
-                return new ObservableCollection<ProductoGrupo>();
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
+                return new ObservableCollection<ProductoGrupo>();                
             }
         }
 
@@ -129,6 +168,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Producto>();
             }
         }
@@ -154,6 +195,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return 0;
             }
         }
@@ -187,6 +230,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -216,6 +261,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -246,6 +293,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -279,6 +328,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -302,6 +353,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -330,6 +383,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Servicio>();
             }
         }
@@ -361,6 +416,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -384,6 +441,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -414,6 +473,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -444,6 +505,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Usuario>();
             }
         }
@@ -470,6 +533,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<DateTime>();
             }
         }
@@ -500,6 +565,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Cita>();
             }
         }
@@ -529,6 +596,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Cita>();
             }
         }
@@ -555,6 +624,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Horario>();
             }
         }
@@ -582,6 +653,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Horario>();
             }
         }
@@ -609,6 +682,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Usuario>();
             }
         }
@@ -635,6 +710,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Usuario>();
             }
         }
@@ -660,6 +737,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Servicio>();
             }
         }
@@ -687,6 +766,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -712,6 +793,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -735,6 +818,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -764,7 +849,9 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
-                return new ObservableCollection<Usuario>();
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
+                return new ObservableCollection<Usuario>();                
             }
         }
 
@@ -790,6 +877,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Usuario>();
             }
         }
@@ -824,6 +913,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -848,6 +939,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -883,6 +976,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -912,6 +1007,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -948,6 +1045,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -970,6 +1069,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -999,6 +1100,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Disponibilidad>();
             }
         }
@@ -1024,6 +1127,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new ObservableCollection<Horario>();
             }
         }
@@ -1050,6 +1155,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -1076,6 +1183,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }
@@ -1099,6 +1208,8 @@ namespace ProyectoPeluqueria
             }
             catch (Exception)
             {
+                Properties.Settings.Default.autorizado = false;
+                MuestraDialogo("Debe volver a iniciar sesión");
                 return new MensajeGeneral("Error de acceso a la base de datos");
             }
         }

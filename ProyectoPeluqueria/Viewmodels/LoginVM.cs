@@ -102,8 +102,10 @@ namespace ProyectoPeluqueria.Viewmodels
             bool result = await ValidateLogin();
             if (result)
             {
+                Username = "";
+                Password = "";
                 Close?.Invoke(this, EventArgs.Empty);
-                MuestraDialogo($"Bienvenido, {Mensaje.Nombre}");
+                MuestraDialogo($"Bienvenido, {Mensaje.Nombre}");                
             }
             else
             {

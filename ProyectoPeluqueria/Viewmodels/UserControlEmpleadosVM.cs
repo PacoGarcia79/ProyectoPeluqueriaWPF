@@ -99,9 +99,29 @@ namespace ProyectoPeluqueria.Viewmodels
         public UserControlEmpleadosVM()
         {
             Response = new MensajeGeneral();
-            ListaEmpleados = ServicioApiRest.GetEmpleados();
+            CargaEmpleados();
 
             EmpleadoSeleccionadoAuxiliar = new Usuario();
+        }
+
+        /// <summary>
+        /// Carga el listado de empleados y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public async void CargaEmpleados()
+        {
+            ListaEmpleados = ServicioApiRest.GetEmpleados();
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            if (ListaEmpleados == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaEmpleados.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido empleados");
+            }
+
         }
 
         /// <summary>
@@ -141,9 +161,17 @@ namespace ProyectoPeluqueria.Viewmodels
                 {
                     MuestraDialogo("Ha dado de baja al empleado");
                 }
-            }                
+                else if (Response.Mensaje == "Debes identificarte")
+                {
+                    Properties.Settings.Default.autorizado = false;
+                    MuestraDialogo("Debe volver a iniciar sesión");
+                }
+            }
             else
+            {
                 Response = new MensajeGeneral("Error de acceso a la base de datos");
+                MuestraDialogo(Response.Mensaje);
+            }
         }
 
         /// <summary>
@@ -157,13 +185,16 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         public async void OnShowBajaEmpleado()
         {
-            var vm = new DialogoConfirmacionVM("¿Quieres dar de baja al empleado?");
+            var vm = new DialogoConfirmacionVM("¿Quieres dar de baja al empleado? Por favor, compruebe antes si tiene citas confirmadas.");
             object dialogResult = await MDIXDialogHost.Show(vm, DialogIdentifier);
             if (dialogResult is bool boolResult && boolResult)
             {
                 BajaEmpleado();
-                ListaEmpleados = ServicioApiRest.GetEmpleados();
-                EmpleadoSeleccionado = new Usuario();
+                if (Response.Mensaje == "Registro actualizado")
+                {
+                    CargaEmpleados();
+                    EmpleadoSeleccionado = new Usuario();
+                }                    
             }
         }
 
@@ -177,7 +208,7 @@ namespace ProyectoPeluqueria.Viewmodels
             {
                 void OnClose(object _, EventArgs args)
                 {
-                    ListaEmpleados = ServicioApiRest.GetEmpleados();
+                    CargaEmpleados();
                     vm.Close -= OnClose;
                     e.Session.Close();
                 }
@@ -236,7 +267,7 @@ namespace ProyectoPeluqueria.Viewmodels
                 bool result = await ValidateModify();
                 if (result)
                 {
-                    ListaEmpleados = ServicioApiRest.GetEmpleados();
+                    CargaEmpleados();
                     EmpleadoSeleccionado = new Usuario();
                     FotoBase64 = "";
                 }
@@ -274,7 +305,21 @@ namespace ProyectoPeluqueria.Viewmodels
 
             await Task.Delay(TimeSpan.FromSeconds(1));
 
-            return Response.Mensaje == "Registro actualizado";
+            if (Response != null)
+            {
+                if (Response.Mensaje == "Registro actualizado")
+                    return true;
+                else
+                {
+                    Properties.Settings.Default.autorizado = false;
+                    return false;
+                }
+            }
+            else
+            {
+                Response = new MensajeGeneral("Error al acceder a a la base de datos");
+                return false;
+            }
 
         }
 

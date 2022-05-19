@@ -304,7 +304,6 @@
                         <materialDesign:Flipper
                             Margin="0,7,0,7"
                             materialDesign:ShadowAssist.ShadowDepth="Depth0"
-                            IsFlipped="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
                             Style="{StaticResource MaterialDesignCardFlipper}">
                             <materialDesign:Flipper.FrontContent>
                                 <Grid Width="200" Height="425">
@@ -363,6 +362,7 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     Foreground="Black"
+                                                    IsEnabled="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
                                                     ItemsSource="{Binding Stock, Converter={StaticResource stockConverter}}"
                                                     SelectedItem="{Binding Cantidad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     Style="{StaticResource MaterialDesignFilledComboBox}" />

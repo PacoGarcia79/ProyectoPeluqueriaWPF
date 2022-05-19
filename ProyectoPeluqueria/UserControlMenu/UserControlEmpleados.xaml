@@ -267,7 +267,6 @@
                         <materialDesign:Flipper
                             Margin="0,8,0,8"
                             materialDesign:ShadowAssist.ShadowDepth="Depth0"
-                            IsFlipped="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
                             Style="{StaticResource MaterialDesignCardFlipper}">
                             <materialDesign:Flipper.FrontContent>
                                 <Grid Width="200" Height="425">

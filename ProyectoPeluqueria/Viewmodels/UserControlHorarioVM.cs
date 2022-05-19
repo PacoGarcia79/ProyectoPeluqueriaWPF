@@ -360,13 +360,21 @@ namespace ProyectoPeluqueria.Viewmodels
                         MuestraDialogo("Disponibilidad Modificada");
                         RefrescaListas();
                     }
+                    else if (Response.Mensaje == "Debes identificarte")
+                    {
+                        Properties.Settings.Default.autorizado = false;
+                        MuestraDialogo("Debe volver a iniciar sesión");
+                    }
                     else
                     {
                         MuestraDialogo("Ha habido un error al modificar");
                     }
                 }
                 else
+                {
                     Response = new MensajeGeneral("Error de acceso a la base de datos");
+                    MuestraDialogo(Response.Mensaje);
+                }
             }
         }
 
@@ -375,11 +383,11 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         private void RefrescaListas()
         {
-            ListaHorariosNoDisponibles = ServicioApiRest.GetHorariosDeshabilitados();
+            CargaHorariosNoDisponibles();
             ListaHorariosSeleccionados = new ObservableCollection<Horario>();
             ListaEmpleadosSeleccionados = new ObservableCollection<Usuario>();
-            ListaHorarios = ServicioApiRest.GetHorariosLista();
-            ListaEmpleados = ServicioApiRest.GetEmpleados();
+            CargaHorarios();
+            CargaEmpleados();
             ListaCitasConfirmadas = new ObservableCollection<Cita>();
         }
 
@@ -418,13 +426,21 @@ namespace ProyectoPeluqueria.Viewmodels
                     {
                         MuestraDialogo("No se puede realizar al existir previamente el registro");
                     }
+                    else if (Response.Mensaje == "Debes identificarte")
+                    {
+                        Properties.Settings.Default.autorizado = false;
+                        MuestraDialogo("Debe volver a iniciar sesión");
+                    }
                     else
                     {
                         MuestraDialogo("Ha habido un error al modificar");
                     }
                 }
                 else
+                {
                     Response = new MensajeGeneral("Error de acceso a la base de datos");
+                    MuestraDialogo(Response.Mensaje);
+                }
 
             }
         }
@@ -465,14 +481,74 @@ namespace ProyectoPeluqueria.Viewmodels
         public UserControlHorarioVM()
         {
             Response = new MensajeGeneral();
-            ListaHorariosNoDisponibles = ServicioApiRest.GetHorariosDeshabilitados();
-            ListaHorarios = ServicioApiRest.GetHorariosLista();
-            ListaEmpleados = ServicioApiRest.GetEmpleados();
+            CargaHorariosNoDisponibles();
+            CargaHorarios();
+            CargaEmpleados();
             ListaHorariosSeleccionados = new ObservableCollection<Horario>();
             ListaEmpleadosSeleccionados = new ObservableCollection<Usuario>();
             ListaCitasConfirmadas = new ObservableCollection<Cita>();
 
             _selectedItems = new ObservableCollection<Disponibilidad>();
+        }
+
+        /// <summary>
+        /// Carga el listado de empleados y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public async void CargaEmpleados()
+        {
+            ListaEmpleados = ServicioApiRest.GetEmpleados();
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            if (ListaEmpleados == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaEmpleados.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido empleados");
+            }
+
+        }
+
+        /// <summary>
+        /// Carga el listado de horarios y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public async void CargaHorarios()
+        {
+            ListaHorarios = ServicioApiRest.GetHorariosLista();
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            if (ListaHorarios == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaHorarios.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido horarios");
+            }
+
+        }
+
+        /// <summary>
+        /// Carga el listado de horarios no disponibles y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public async void CargaHorariosNoDisponibles()
+        {
+            ListaHorariosNoDisponibles = ServicioApiRest.GetHorariosDeshabilitados();
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            if (ListaHorariosNoDisponibles == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaHorariosNoDisponibles.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido horarios no disponibles");
+            }
+
         }
 
 

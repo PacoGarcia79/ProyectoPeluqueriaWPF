@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using ProyectoPeluqueria.DialogoPersonalizado;
 using ProyectoPeluqueria.Modelos;
 using ProyectoPeluqueria.UserControlMenu;
 using System;
@@ -80,7 +81,7 @@ namespace ProyectoPeluqueria.Viewmodels
             {
                 void OnClose(object _, EventArgs args)
                 {
-                    ListaProductosGrupos = ServicioApiRest.GetGrupos();
+                    CargaProductos();
                     vm.Close -= OnClose;
                     e.Session.Close();
                 }
@@ -99,7 +100,7 @@ namespace ProyectoPeluqueria.Viewmodels
             {
                 void OnClose(object _, EventArgs args)
                 {
-                    ListaProductosGrupos = ServicioApiRest.GetGrupos();
+                    CargaProductos();
                     vm.Close -= OnClose;
                     e.Session.Close();
                 }
@@ -112,7 +113,36 @@ namespace ProyectoPeluqueria.Viewmodels
         {
             ProductoGrupoSeleccionado = new ProductoGrupo();
             Response = new MensajeGeneral();
+            CargaProductos();
+
+        }
+
+        /// <summary>
+        /// Muestra un diálogo informativo con un mensaje pasado por parámetro
+        /// </summary>
+        /// <param name="mensaje">string a mostrar</param>
+        public void MuestraDialogo(string mensaje)
+        {
+            Dialogo dialogo = new Dialogo();
+            dialogo.MensajeText.Text = mensaje;
+            dialogo.ShowDialog();
+        }
+
+        /// <summary>
+        /// Carga el listado de grupos de productos y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        private void CargaProductos()
+        {
             ListaProductosGrupos = ServicioApiRest.GetGrupos();
+
+            if (ListaProductosGrupos == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaProductosGrupos.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido grupos de productos");
+            }
 
         }
 

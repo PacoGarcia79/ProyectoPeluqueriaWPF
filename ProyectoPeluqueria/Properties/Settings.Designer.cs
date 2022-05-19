@@ -46,5 +46,17 @@ namespace ProyectoPeluqueria.Properties {
                 this["imagen"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autorizado {
+            get {
+                return ((bool)(this["autorizado"]));
+            }
+            set {
+                this["autorizado"] = value;
+            }
+        }
     }
 }

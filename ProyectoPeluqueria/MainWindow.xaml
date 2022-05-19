@@ -9,6 +9,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:ProyectoPeluqueria.Modelos"
+    xmlns:properties="clr-namespace:ProyectoPeluqueria.Properties"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:usercontrolpassword="clr-namespace:ProyectoPeluqueria.UserControlPassword"
     xmlns:vm="clr-namespace:ProyectoPeluqueria.Viewmodels"
@@ -62,13 +63,13 @@
                                     materialDesign:HintAssist.Hint="Nombre de usuario"
                                     Foreground="Black"
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    Text="{Binding Username, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                                    Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <usercontrolpassword:UserControlPassword
                                     x:Name="Passw"
                                     Margin="20"
                                     materialDesign:HintAssist.Hint="Contraseña"
                                     Foreground="Black"
-                                    Password="{Binding Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                                    Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                     <Button
                                         x:Name="Aceptar"
@@ -215,14 +216,14 @@
                                 <Button
                                     Command="com:CustomCommands.Logout"
                                     Content="Logout"
-                                    IsEnabled="{Binding UsuarioAutorizado}" />
+                                    IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=autorizado}" />
                             </StackPanel>
                         </materialDesign:PopupBox>
                         <DockPanel>
                             <ToggleButton
                                 DockPanel.Dock="Left"
                                 IsChecked="{Binding IsLeftDrawerOpen, ElementName=DrawerHost}"
-                                IsEnabled="{Binding UsuarioAutorizado}"
+                                IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=autorizado}"
                                 Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
                             <Rectangle
                                 Width="270"

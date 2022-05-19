@@ -157,9 +157,27 @@ namespace ProyectoPeluqueria.Viewmodels
         {
             TipoProductoGrupo = NavegacionTipoProducto.TipoProducto;
             Response = new MensajeGeneral();
-            ListaProductos = ServicioApiRest.GetProductosGrupo(TipoProductoGrupo);
+            CargaProductos();
 
             ProductoSeleccionadoAuxiliar = new Producto();
+        }
+
+        /// <summary>
+        /// Carga el listado de productos y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        private void CargaProductos()
+        {
+            ListaProductos = ServicioApiRest.GetProductosGrupo(TipoProductoGrupo);
+
+            if (ListaProductos == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaProductos.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido productos");
+            }
+
         }
 
         /// <summary>
@@ -199,10 +217,18 @@ namespace ProyectoPeluqueria.Viewmodels
                 {
                     MuestraDialogo("Ha borrado el producto");
                 }
-            }                
+                else if (Response.Mensaje == "Debes identificarte")
+                {
+                    Properties.Settings.Default.autorizado = false;
+                    MuestraDialogo("Debe volver a iniciar sesión");
+                }
+            }
             else
+            {
                 Response = new MensajeGeneral("Error de acceso a la base de datos");
-            
+                MuestraDialogo(Response.Mensaje);
+            }
+
         }
 
 
@@ -222,8 +248,11 @@ namespace ProyectoPeluqueria.Viewmodels
             if (dialogResult is bool boolResult && boolResult)
             {
                 EliminarProducto();
-                ListaProductos = ServicioApiRest.GetProductosGrupo(TipoProductoGrupo);
-                ProductoSeleccionado = new Producto();
+                if (Response.Mensaje == "Registro eliminado")
+                {
+                    CargaProductos();
+                    ProductoSeleccionado = new Producto();
+                }
             }
         }
 
@@ -238,7 +267,7 @@ namespace ProyectoPeluqueria.Viewmodels
             {
                 void OnClose(object _, EventArgs args)
                 {
-                    ListaProductos = ServicioApiRest.GetProductosGrupo(TipoProductoGrupo);
+                    CargaProductos();
                     ProductoSeleccionadoAuxiliar = null;
                     ProductoSeleccionado = new Producto();
                     vm.Close -= OnClose;
@@ -253,7 +282,7 @@ namespace ProyectoPeluqueria.Viewmodels
         /// </summary>
         /// <returns>true/false</returns>
         public bool CanAddProductoCita() => ProductoSeleccionadoAuxiliar.Cantidad != 0;
-        
+
 
         /// <summary>
         /// Abre el diálogo para añadir el producto a la cita. Método Execute del command para añadir el producto a la cita
@@ -266,7 +295,7 @@ namespace ProyectoPeluqueria.Viewmodels
             {
                 void OnClose(object _, EventArgs args)
                 {
-                    ListaProductos = ServicioApiRest.GetProductosGrupo(TipoProductoGrupo);
+                    CargaProductos();
                     ProductoSeleccionadoAuxiliar = null;
                     ProductoSeleccionado = new Producto();
                     vm.Close -= OnClose;
@@ -291,7 +320,7 @@ namespace ProyectoPeluqueria.Viewmodels
             bool result = await ValidateModify();
             if (result)
             {
-                ListaProductos = ServicioApiRest.GetProductosGrupo(TipoProductoGrupo);
+                CargaProductos();
                 ProductoSeleccionado = new Producto();
             }
 
@@ -318,7 +347,9 @@ namespace ProyectoPeluqueria.Viewmodels
             if (response != null)
                 Response = response;
             else
+            {
                 Response = new MensajeGeneral("Error de acceso a la base de datos");
+            }
         }
 
         /// <summary>
@@ -331,7 +362,13 @@ namespace ProyectoPeluqueria.Viewmodels
 
             await Task.Delay(TimeSpan.FromSeconds(1));
 
-            return Response.Mensaje == "Registro actualizado";
+            if (Response.Mensaje == "Registro actualizado")
+                return true;
+            else
+            {
+                Properties.Settings.Default.autorizado = false;
+                return false;
+            }
 
         }
 

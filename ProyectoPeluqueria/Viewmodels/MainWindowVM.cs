@@ -91,34 +91,6 @@ namespace ProyectoPeluqueria
             }
         }
 
-        private string _userName;
-        public string UserName
-        {
-            get { return _userName; }
-            set
-            {
-                if (_userName != value)
-                {
-                    _userName = value;
-                    NotifyPropertyChanged("UserName");
-                }
-            }
-        }
-
-        private string _password;
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                if (_password != value)
-                {
-                    _password = value;
-                    NotifyPropertyChanged("Password");
-                }
-            }
-        }
-
         /// <summary>
         /// Boolean que controla el cierre del menú drawer
         /// </summary>
@@ -153,45 +125,8 @@ namespace ProyectoPeluqueria
             }
         }
 
-        /// <summary>
-        /// Propiedad Cliente de tipo RestClient necesaria para el Request a la APIRest
-        /// </summary>
-        private RestClient Client { get; set; }
-
-        /// <summary>
-        /// Propiedad Cook de tipo Cookie que se debe añadir al Request a la APIRest
-        /// </summary>
-        private Cookie Cook { get; set; }
-
-        /// <summary>
-        /// Obtiene la cookie necesaría para las peticiones a la APIRest
-        /// </summary>
-        private void GetCookie()
-        {
-            try
-            {
-                var request = (HttpWebRequest)WebRequest.Create(Properties.Settings.Default.api);
-                request.CookieContainer = new CookieContainer();
-
-                using (var response = (HttpWebResponse)request.GetResponse())
-                {
-                    Cook = response.Cookies[0];
-                }
-            }
-            catch (WebException)
-            {
-                MuestraDialogo("No es posible conectarse al servidor");
-            }
-        }
-
-
         public MainWindowVM()
         {
-            Client = new RestClient(Properties.Settings.Default.api);
-            GetCookie();
-
-            ServicioApiRest.Cook = Cook;
-            ServicioApiRest.Client = Client;
 
             Mensaje = new MensajeLogout();
 
@@ -212,7 +147,7 @@ namespace ProyectoPeluqueria
             if (dialogResult is bool boolResult && boolResult)
             {
                 Logout();
-                UsuarioAutorizado = false;
+                Properties.Settings.Default.autorizado = false;
                 SelectedUserControl = new UserControlInicio();
             }
         }
@@ -221,7 +156,7 @@ namespace ProyectoPeluqueria
         /// Método CanExecute de la implementación del command para login en el menu overflow
         /// </summary>
         /// <returns>true/false</returns>
-        public bool CanLoginForm() => !UsuarioAutorizado;
+        public bool CanLoginForm() => !Properties.Settings.Default.autorizado;
 
         /// <summary>
         /// Método Execute de la implementación del command para login en el menu overflow
@@ -234,7 +169,7 @@ namespace ProyectoPeluqueria
              {
                  void OnClose(object _, EventArgs args)
                  {
-                     UsuarioAutorizado = true;
+                     Properties.Settings.Default.autorizado = true;
                      vm.Close -= OnClose;
                      e.Session.Close();
                  }
@@ -246,7 +181,7 @@ namespace ProyectoPeluqueria
         /// Método CanExecute de la implementación del command al hacer click en cada una de las opciones del menú drawer
         /// </summary>
         /// <returns>true/false</returns>
-        public bool CanUpdateUserControl() => UsuarioAutorizado;
+        public bool CanUpdateUserControl() => Properties.Settings.Default.autorizado;
 
         /// <summary>
         /// Método Execute de la implementación del command al hacer click en cada una de las opciones del menú drawer.-
@@ -305,10 +240,18 @@ namespace ProyectoPeluqueria
         public void Logout()
         {
             Mensaje = ServicioApiRest.PostLogout();
-            if (Mensaje.Usuario == "")
+            if(Mensaje == null)
+            {
+                MuestraDialogo("Ha ocurrido un error. Debe volver a identificarse");
+                Properties.Settings.Default.autorizado = false;
+                SelectedUserControl = new UserControlInicio();                
+            }
+            else if (Mensaje.Usuario == "")
             {
                 MuestraDialogo("Ha salido del sistema");
             }
+
+            OnShowLoginForm();
         }
 
         /// <summary>

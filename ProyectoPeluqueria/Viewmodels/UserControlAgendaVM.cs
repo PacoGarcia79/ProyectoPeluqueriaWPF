@@ -133,10 +133,15 @@ namespace ProyectoPeluqueria.Viewmodels
 
             await Task.Delay(TimeSpan.FromSeconds(1));
 
-            if (ListaCitas.Count == 0)
+            if (ListaCitas == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaCitas.Count == 0)
             {
                 MuestraDialogo("No hay citas reservadas en este rango de fechas");
             }
+            
         }
 
         /// <summary>
@@ -186,7 +191,10 @@ namespace ProyectoPeluqueria.Viewmodels
             if (dialogResult is bool boolResult && boolResult)
             {
                 BajaCita();
-                ListaCitas = ServicioApiRest.GetCitas(FechaComienzo, FechaFin, 0);
+                if (Response.Mensaje == "Registro/s actualizado/s")
+                {
+                    CargaCitas();
+                }                    
             }
         }
 
@@ -204,9 +212,18 @@ namespace ProyectoPeluqueria.Viewmodels
                 {
                     MuestraDialogo("Ha cancelado las citas");
                 }
+                else if (Response.Mensaje == "Debes identificarte")
+                {
+                    Properties.Settings.Default.autorizado = false;
+                    MuestraDialogo("Debe volver a iniciar sesión");
+                }
             }
             else
+            {
                 Response = new MensajeGeneral("Error de acceso a la base de datos");
+                MuestraDialogo(Response.Mensaje);
+            }
+                
         }
 
         /// <summary>

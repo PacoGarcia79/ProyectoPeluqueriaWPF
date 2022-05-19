@@ -58,7 +58,7 @@ namespace ProyectoPeluqueria.Viewmodels
         /// <summary>
         /// Lista de servicios del establecimiento
         /// </summary>
-        private ObservableCollection<Servicio> _listaServicios;     
+        private ObservableCollection<Servicio> _listaServicios;
         public ObservableCollection<Servicio> ListaServicios
         {
             get { return _listaServicios; }
@@ -131,9 +131,29 @@ namespace ProyectoPeluqueria.Viewmodels
         public UserControlServiciosVM()
         {
             Response = new MensajeGeneral();
-            ListaServicios = ServicioApiRest.GetServicios();
+            CargaEmpleados();
 
             ServicioSeleccionadoAuxiliar = new Servicio();
+        }
+
+        /// <summary>
+        /// Carga el listado de servicios y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public async void CargaEmpleados()
+        {
+            ListaServicios = ServicioApiRest.GetServicios();
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            if (ListaServicios == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaServicios.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido servicios");
+            }
+
         }
 
         /// <summary>
@@ -153,8 +173,10 @@ namespace ProyectoPeluqueria.Viewmodels
 
                 FotoBase64 = ImgUtils.imgToBase64(path);
 
-                ServicioSeleccionado.Foto = FotoBase64;
-                ServicioSeleccionado.RutaFotoNueva = path;
+                //ServicioSeleccionado.Foto = FotoBase64;
+                //ServicioSeleccionado.RutaFotoNueva = path;
+                ServicioSeleccionadoAuxiliar.Foto = FotoBase64;
+                ServicioSeleccionadoAuxiliar.RutaFotoNueva = path;
             }
         }
 
@@ -171,9 +193,17 @@ namespace ProyectoPeluqueria.Viewmodels
                 {
                     MuestraDialogo("Ha borrado el servicio");
                 }
-            }                
+                else if (Response.Mensaje == "Debes identificarte")
+                {
+                    Properties.Settings.Default.autorizado = false;
+                    MuestraDialogo("Debe volver a iniciar sesión");
+                }
+            }
             else
-                Response = new MensajeGeneral("Error de acceso a la base de datos");            
+            {
+                Response = new MensajeGeneral("Error de acceso a la base de datos");
+                MuestraDialogo(Response.Mensaje);
+            }
         }
 
         /// <summary>
@@ -186,8 +216,13 @@ namespace ProyectoPeluqueria.Viewmodels
             if (dialogResult is bool boolResult && boolResult)
             {
                 EliminarServicio();
-                ListaServicios = ServicioApiRest.GetServicios();
-                ServicioSeleccionado = new Servicio();
+
+                if (Response.Mensaje == "Registro eliminado")
+                {
+                    CargaEmpleados();
+                    ServicioSeleccionado = new Servicio();
+                }                  
+                
             }
 
         }
@@ -208,7 +243,7 @@ namespace ProyectoPeluqueria.Viewmodels
             {
                 void OnClose(object _, EventArgs args)
                 {
-                    ListaServicios = ServicioApiRest.GetServicios();
+                    CargaEmpleados();
                     ServicioSeleccionadoAuxiliar = null;
                     ServicioSeleccionado = new Servicio();
                     vm.Close -= OnClose;
@@ -228,7 +263,7 @@ namespace ProyectoPeluqueria.Viewmodels
             {
                 void OnClose(object _, EventArgs args)
                 {
-                    ListaServicios = ServicioApiRest.GetServicios();
+                    CargaEmpleados();
                     ServicioSeleccionadoAuxiliar = null;
                     ServicioSeleccionado = new Servicio();
                     vm.Close -= OnClose;
@@ -247,7 +282,9 @@ namespace ProyectoPeluqueria.Viewmodels
             if (response != null)
                 Response = response;
             else
+            {
                 Response = new MensajeGeneral("Error de acceso a la base de datos");
+            }
         }
 
         /// <summary>
@@ -265,7 +302,7 @@ namespace ProyectoPeluqueria.Viewmodels
             bool result = await ValidateModify();
             if (result)
             {
-                ListaServicios = ServicioApiRest.GetServicios();
+                CargaEmpleados();
                 ServicioSeleccionado = new Servicio();
             }
 
@@ -294,8 +331,13 @@ namespace ProyectoPeluqueria.Viewmodels
 
             await Task.Delay(TimeSpan.FromSeconds(1));
 
-            return Response.Mensaje == "Registro actualizado";
-
+            if (Response.Mensaje == "Registro actualizado")
+                return true;
+            else
+            {
+                Properties.Settings.Default.autorizado = false;
+                return false;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

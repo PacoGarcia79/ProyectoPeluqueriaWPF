@@ -15,9 +15,6 @@
         <!--  ContentControl para mostrar la pantalla según las opciones de DataType  -->
         <ContentControl Content="{Binding SelectedUserControl}">
             <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type vm:UserControlProductosMainVM}">
-                    <local:UserControlProductosMain />
-                </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:UserControlProductosGruposVM}">
                     <local:UserControlProductosGrupos />
                 </DataTemplate>

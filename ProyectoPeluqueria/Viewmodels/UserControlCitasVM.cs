@@ -320,15 +320,49 @@ namespace ProyectoPeluqueria.Viewmodels
         {
             if (Options == Opciones.Hora)
             {
-                ListaHorarios = ServicioApiRest.GetHorariosLibresFecha(FechaSeleccionada);
+                CargaHorariosLibresFecha();
                 ListaServicios = new ObservableCollection<Servicio>();
                 ListaEmpleadosCitaPorHora = new ObservableCollection<Usuario>();
             }
             else
             {
-                ListaEmpleadosCitaPorProfesional = ServicioApiRest.GetEmpleadosDisponiblesOpcionProfesional(FechaSeleccionada);
+                CargaEmpleadosDisponiblesOpcionProfesional();
                 ListaServicios = new ObservableCollection<Servicio>();
                 ListaHorarios = new ObservableCollection<Horario>();
+            }
+        }
+
+        /// <summary>
+        /// Carga el listado de empleados y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public void CargaEmpleadosDisponiblesOpcionProfesional()
+        {
+            ListaEmpleadosCitaPorProfesional = ServicioApiRest.GetEmpleadosDisponiblesOpcionProfesional(FechaSeleccionada);
+
+            if (ListaEmpleadosCitaPorProfesional == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaEmpleadosCitaPorProfesional.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido empleados");
+            }
+        }
+
+        /// <summary>
+        /// Carga el listado de horarios y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public void CargaHorariosLibresFecha()
+        {
+            ListaHorarios = ServicioApiRest.GetHorariosLibresFecha(FechaSeleccionada);
+
+            if (ListaHorarios == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaHorarios.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido horarios");
             }
         }
 
@@ -338,9 +372,26 @@ namespace ProyectoPeluqueria.Viewmodels
         public void RefrescaListaEmpleados()
         {
             if (HorarioSeleccionado != null)
-                ListaEmpleadosCitaPorHora = ServicioApiRest.GetEmpleadosDisponiblesOpcionHora(HorarioSeleccionado.IdHorario, FechaSeleccionada);
+                CargaEmpleadosDisponiblesOpcionHora();
             else
                 ListaEmpleadosCitaPorHora = new ObservableCollection<Usuario>();
+        }
+
+        /// <summary>
+        /// Carga el listado de empleados y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public void CargaEmpleadosDisponiblesOpcionHora()
+        {
+            ListaEmpleadosCitaPorHora = ServicioApiRest.GetEmpleadosDisponiblesOpcionHora(HorarioSeleccionado.IdHorario, FechaSeleccionada);
+
+            if (ListaEmpleadosCitaPorHora == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaEmpleadosCitaPorHora.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido empleados");
+            }
         }
 
         /// <summary>
@@ -349,9 +400,26 @@ namespace ProyectoPeluqueria.Viewmodels
         public void RefrescaListaServicios()
         {
             if (EmpleadoSeleccionado != null)
-                ListaServicios = ServicioApiRest.GetServiciosPorEmpleado(EmpleadoSeleccionado.IdUsuario);
+                CargaServiciosPorEmpleado();
             else
                 ListaServicios = new ObservableCollection<Servicio>();
+        }
+
+        /// <summary>
+        /// Carga el listado de empleados y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public void CargaServiciosPorEmpleado()
+        {
+            ListaServicios = ServicioApiRest.GetServiciosPorEmpleado(EmpleadoSeleccionado.IdUsuario);
+
+            if (ListaServicios == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaServicios.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido servicios");
+            }
         }
 
         /// <summary>
@@ -360,9 +428,26 @@ namespace ProyectoPeluqueria.Viewmodels
         public void RefrescaListaHorarios()
         {
             if (EmpleadoSeleccionado != null)
-                ListaHorarios = ServicioApiRest.GetHorariosLibresEmpleadosFecha(EmpleadoSeleccionado.IdUsuario, FechaSeleccionada);
+                CargaHorariosLibresEmpleadosFecha();
             else
                 ListaHorarios = new ObservableCollection<Horario>();
+        }
+
+        /// <summary>
+        /// Carga el listado de horarios y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public void CargaHorariosLibresEmpleadosFecha()
+        {
+            ListaHorarios = ServicioApiRest.GetHorariosLibresEmpleadosFecha(EmpleadoSeleccionado.IdUsuario, FechaSeleccionada);
+
+            if (ListaHorarios == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaHorarios.Count == 0)
+            {
+                MuestraDialogo("No se han obtenido horarios");
+            }
         }
 
         /// <summary>
@@ -420,11 +505,23 @@ namespace ProyectoPeluqueria.Viewmodels
                 }
                 else
                 {
-                    MuestraDialogo("Ha habido un error al añadir la cita");
+                    if (Response.Mensaje == "Debes identificarte")
+                    {
+                        Properties.Settings.Default.autorizado = false;
+                        MuestraDialogo("Ha habido un problema y debes iniciar sesión");
+                        LimpiaListasYObjetos();
+                    }
+                    else
+                    {
+                        MuestraDialogo("Ha habido un error al añadir la cita");
+                    }
                 }
             }
             else
+            {
                 Response = new MensajeGeneral("Error de acceso a la base de datos");
+                MuestraDialogo(Response.Mensaje);
+            }
         }
 
         /// <summary>
@@ -446,7 +543,7 @@ namespace ProyectoPeluqueria.Viewmodels
         /// <summary>
         /// Obtiene el primer día disponible para confirmar citas, que se mostrará en el calendario
         /// </summary>
-        public void CompruebaDiasAgenda()
+        public async void CompruebaDiasAgenda()
         {
             BlackOutDates = ServicioApiRest.GetFechasOcupadas(DateTime.Now);
 
@@ -487,6 +584,7 @@ namespace ProyectoPeluqueria.Viewmodels
             }
             else
             {
+                await Task.Delay(TimeSpan.FromSeconds(1));
                 MuestraDialogo("Error al acceder a las fechas");
             }            
         }
@@ -507,7 +605,7 @@ namespace ProyectoPeluqueria.Viewmodels
             CompruebaFecha = true;
 
             _listaServiciosSeleccionados = new ArrayList();
-            ListaClientes = ServicioApiRest.GetClientes();
+            CargaClientes();
             ListaServicios = new ObservableCollection<Servicio>();
             ListaServiciosSeleccionados = new ObservableCollection<Servicio>();
             ListaEmpleadosCitaPorHora = new ObservableCollection<Usuario>();
@@ -517,6 +615,26 @@ namespace ProyectoPeluqueria.Viewmodels
             Options = Opciones.Hora;
 
             CompruebaDiasAgenda();
+        }
+
+        /// <summary>
+        /// Carga las citas confirmadas y muestra mensaje si es null o no contiene elementos
+        /// </summary>
+        public async void CargaClientes()
+        {
+            ListaClientes = ServicioApiRest.GetClientes();
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            if (ListaClientes == null)
+            {
+                MuestraDialogo("Error al obtener los datos");
+            }
+            else if (ListaClientes.Count == 0)
+            {
+                MuestraDialogo("No hay citas reservadas en este rango de fechas");
+            }
+
         }
 
 

@@ -205,6 +205,7 @@ namespace ProyectoPeluqueria.Viewmodels
             {
                 FechaActual = DateTime.Now;
                 MuestraDialogo("Empleado añadido");
+                Close?.Invoke(this, EventArgs.Empty);
             }
             else
             {
@@ -212,13 +213,16 @@ namespace ProyectoPeluqueria.Viewmodels
                 {
                     MuestraDialogo(Response.Mensaje);
                 }
+                else if(Response.Mensaje == "Debes identificarte")
+                {
+                    Properties.Settings.Default.autorizado = false;
+                    MuestraDialogo("Ha habido un problema y debes iniciar sesión");
+                }
                 else
                 {
                     MuestraDialogo("No se ha podido añadir");
                 }
-            }
-
-            Close?.Invoke(this, EventArgs.Empty);
+            }           
 
         }
 
@@ -245,7 +249,10 @@ namespace ProyectoPeluqueria.Viewmodels
             if (response != null)
                 Response = response;
             else
+            {
                 Response = new MensajeGeneral("Error de acceso a la base de datos");
+                MuestraDialogo(Response.Mensaje);
+            }
         }
 
         /// <summary>

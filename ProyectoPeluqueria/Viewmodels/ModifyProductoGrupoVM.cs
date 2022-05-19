@@ -191,7 +191,15 @@ namespace ProyectoPeluqueria.Viewmodels
             }
             else
             {
-                MuestraDialogo("No se ha podido modificar");
+                if (Response.Mensaje == "Debes identificarte")
+                {
+                    Properties.Settings.Default.autorizado = false;
+                    MuestraDialogo("Ha habido un problema y debes iniciar sesión");
+                }
+                else
+                {
+                    MuestraDialogo("No se ha podido añadir");
+                }
             }
         }
 
@@ -215,7 +223,10 @@ namespace ProyectoPeluqueria.Viewmodels
             if (response != null)
                 Response = response;
             else
+            {
                 Response = new MensajeGeneral("Error de acceso a la base de datos");
+                MuestraDialogo(Response.Mensaje);
+            }
         }
 
         /// <summary>
