@@ -13,16 +13,16 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Image
-            Margin="10"
+            Margin="20"
             Source="{Binding Imagen, UpdateSourceTrigger=PropertyChanged}"
             Stretch="Fill" />
         <TextBlock
             Grid.Row="1"
-            Margin="15,5,15,15"
+            Margin="20. 5,20,20"
             Foreground="Black"
             Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
             Text="{Binding Texto, UpdateSourceTrigger=PropertyChanged}"
-            TextAlignment="Justify"
+            TextAlignment="Center"
             TextWrapping="Wrap" />
     </Grid>
 </UserControl>

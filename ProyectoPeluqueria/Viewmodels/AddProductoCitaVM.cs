@@ -102,7 +102,7 @@ namespace ProyectoPeluqueria.Viewmodels
             IdProductoSeleccionado = idProductoSeleccionado;
             CantidadProductoSeleccionado = cantidad;
 
-            ListaCitas = ServicioApiRest.GetCitas(DateTime.Now, DateTime.Now.AddDays(15),0);
+            ListaCitas = ServicioApiRest.GetCitas(DateTime.Now, DateTime.Now.AddDays(60),0);
 
             AddProductoCitaCommand = new RelayCommand(OnAdd, CanAdd);
         }

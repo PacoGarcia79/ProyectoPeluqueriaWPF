@@ -43,6 +43,17 @@ namespace ProyectoPeluqueria.Comandos
             new InputGestureCollection()
             );
 
+        public static readonly RoutedUICommand Ayuda = new RoutedUICommand
+        (
+            "Ayuda", "Ayuda",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.F1)
+            }
+        );
+
+
 
     }
 }

@@ -945,6 +945,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_F3B5985CA3B545A5ABE880142E6D5EDB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F518661619F81A5744BD7B83776B9F39"
         "OwnerKey" = "8:_784262EC1CFA46118D17F429CD41BB0C"
         "MsmSig" = "8:_UNDEFINED"
@@ -971,12 +977,6 @@
         {
         "MsmKey" = "8:_F931A18E156509C0794C1E4569D20F59"
         "OwnerKey" = "8:_784262EC1CFA46118D17F429CD41BB0C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7B7DB02E26AD7C6CA5C23056134C6625"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1801,6 +1801,12 @@
         "OwnerKey" = "8:_148E46DF33058BFE1D8302098A4B0A75"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7B7DB02E26AD7C6CA5C23056134C6625"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -1819,6 +1825,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -1835,6 +1849,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -6058,6 +6088,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F3B5985CA3B545A5ABE880142E6D5EDB"
+            {
+            "SourcePath" = "8:..\\ProyectoPeluqueria\\bin\\Debug\\Manual Usuario Peluqueria en un click.chm"
+            "TargetName" = "8:Manual Usuario Peluqueria en un click.chm"
+            "Tag" = "8:"
+            "Folder" = "8:_7CCA4BF05F924928997ED38C811985A8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F518661619F81A5744BD7B83776B9F39"
             {
             "AssemblyRegister" = "3:1"
@@ -6270,7 +6320,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Peluqueria en un click"
         "ProductCode" = "8:{0CCCD6FC-0826-4F8C-B0A5-9BD5D0125DD7}"
-        "PackageCode" = "8:{A6193D12-0854-4165-B162-7077FC2693ED}"
+        "PackageCode" = "8:{213B5ED2-2DB5-4E39-A0EA-0BA5C4E82E7F}"
         "UpgradeCode" = "8:{31E2F993-7A52-47F9-889A-C25C26E28DA5}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -6833,7 +6883,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_784262EC1CFA46118D17F429CD41BB0C"
             {
-            "SourcePath" = "8:..\\ProyectoPeluqueria\\obj\\Debug\\ProyectoPeluqueria.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CCA4BF05F924928997ED38C811985A8"

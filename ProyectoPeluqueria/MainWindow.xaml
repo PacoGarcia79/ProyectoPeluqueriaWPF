@@ -34,6 +34,8 @@
             Command="com:CustomCommands.LoginForm"
             Executed="LoginForm_Executed" />
 
+        <CommandBinding Command="com:CustomCommands.Ayuda" Executed="Ayuda_Executed" />
+
         <CommandBinding Command="com:CustomCommands.Logout" Executed="Logout_Executed" />
 
     </Window.CommandBindings>
@@ -210,12 +212,12 @@
                             PlacementMode="BottomAndAlignRightEdges"
                             StaysOpen="False">
                             <StackPanel Width="150">
-                                <Button Command="com:CustomCommands.LoginForm" Content="Login" />
-                                <!--<Button Content="Ayuda" />-->
+                                <Button Command="com:CustomCommands.LoginForm" Content="Iniciar sesión" />
+                                <Button Command="com:CustomCommands.Ayuda" Content="Ayuda" />
                                 <Separator />
                                 <Button
                                     Command="com:CustomCommands.Logout"
-                                    Content="Logout"
+                                    Content="Cerrar sesión"
                                     IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=autorizado}" />
                             </StackPanel>
                         </materialDesign:PopupBox>

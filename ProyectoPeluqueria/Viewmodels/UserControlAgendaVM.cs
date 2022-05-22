@@ -118,7 +118,7 @@ namespace ProyectoPeluqueria.Viewmodels
         {
             Response = new MensajeGeneral();
             FechaComienzo = DateTime.Now;
-            FechaFin = DateTime.Now;
+            FechaFin = DateTime.Now.AddDays(60);
             CargaCitas();
 
             _selectedItems = new ObservableCollection<Cita>();

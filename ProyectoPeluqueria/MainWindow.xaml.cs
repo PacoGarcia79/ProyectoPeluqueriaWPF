@@ -60,5 +60,10 @@ namespace ProyectoPeluqueria
             _vm.Salir();
         }
 
+        private void Ayuda_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.AbrirAyuda();
+        }
+
     }
 }

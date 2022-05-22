@@ -274,6 +274,14 @@ namespace ProyectoPeluqueria
             dialogo.ShowDialog();
         }
 
+        public void AbrirAyuda()
+        {
+            string appPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+            string[] paths = { appPath, "Manual Usuario Peluqueria en un click.chm" };
+
+            System.Windows.Forms.Help.ShowHelp(null, Path.Combine(paths));
+        }
+
 
         public void Salir() => Application.Current.Shutdown();
 
