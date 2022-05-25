@@ -222,7 +222,7 @@ namespace ProyectoPeluqueria.Viewmodels
         public void ModificarEmpleadoContraseña()
         {
             EmpleadoSeleccionado.Password = Hash.ComputeSha256Hash(EmpleadoSeleccionado.Password);
-            Response = ServicioApiRest.PutEmpleadoPassw(EmpleadoSeleccionado, FotoBase64);
+            Response = ServicioApiRest.PutEmpleadoPassw(EmpleadoSeleccionado);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace ProyectoPeluqueria.Viewmodels
         /// <returns>true/false</returns>
         public async void OnModifyEmpleado()
         {
-            if (EmpleadoSeleccionado.Password != EmpleadoSeleccionado.ConfirmaContraseña)
+            if (EmpleadoSeleccionado.Password != EmpleadoSeleccionado.ConfirmaContraseña && EmpleadoSeleccionadoAuxiliar.ModificaContraseña)
             {
                 MuestraDialogo("Las contraseñas no coinciden");
             }

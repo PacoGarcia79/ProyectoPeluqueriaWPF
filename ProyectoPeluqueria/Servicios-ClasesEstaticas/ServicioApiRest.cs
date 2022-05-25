@@ -950,7 +950,7 @@ namespace ProyectoPeluqueria
         /// </summary>
         /// <param name="usuario">usuario de referencia a modificar</param>
         /// <returns>Objeto de tipo MensajeGeneral para evaluar el resultado de la petición</returns>}
-        public static MensajeGeneral PutEmpleadoPassw(Usuario usuario, string fotoBase64)
+        public static MensajeGeneral PutEmpleadoPassw(Usuario usuario)
         {
             try
             {
@@ -961,7 +961,7 @@ namespace ProyectoPeluqueria
                 request.AddJsonBody(new
                 {
                     apellidos = usuario.Apellidos,
-                    foto = fotoBase64,
+                    foto = usuario.Foto,
                     email = usuario.Email,
                     telefono = usuario.Telefono,
                     idUsuario = usuario.IdUsuario,
